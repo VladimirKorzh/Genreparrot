@@ -1,0 +1,421 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.genreparrot.app.CreateEditSchedule$PlaceholderFragment"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/background_light">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/layoutBasicSettings"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutTrainingSound"
+                    android:onClick="btnTrainingSoundClick"
+                    android:weightSum="1"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView"
+                            android:src="@drawable/ic_collection_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblTrainingSound"
+                                android:id="@+id/lblTrainingSound"
+                                android:layout_gravity="left|center" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtTrainingSound"
+                                android:singleLine="false"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/layoutVolumeBlock"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView2"
+                            android:src="@drawable/ic_speaker_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="Volume"
+                                android:id="@+id/lblVolume" />
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+
+                                <SeekBar
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/seekVolumeMusic"
+                                    android:layout_weight="0.8"
+                                    android:layout_gravity="center" />
+
+                                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/imageButton"
+                                    android:src="@android:drawable/ic_media_play"
+                                    android:layout_gravity="center"
+                                    android:onClick="btnPlayOnce"
+                                    style="@style/Widget.AppCompat.ActionButton"
+                                    android:clickable="true" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutStartTimeBlock"
+                    android:onClick="btnTimeClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView3"
+                            android:src="@drawable/ic_clock_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/StartTime"
+                                android:id="@+id/lblStartTime" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtStartTime"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutEndTimeBlock"
+                    android:onClick="btnTimeClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView4"
+                            android:src="@drawable/ic_clock_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/EndTime"
+                                android:id="@+id/lblEndTime" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtEndTime"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@+string/btn_display_extra_settings"
+                    android:id="@+id/btnExtraSettings"
+                    android:onClick="btnExtraSettingsClick"
+                    android:visibility="visible"
+                    style="@style/myBox" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/layoutExtraSettings"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout4"
+                    android:onClick="btnAttractorSoundClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView8"
+                            android:src="@drawable/ic_settings_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/AttractorSoundDialog"
+                                android:id="@+id/textView13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtAttractorSound"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout"
+                    android:onClick="btnRepsPerSessionClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView5"
+                            android:src="@drawable/ic_settings_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/RepsPerSessionDialog"
+                                android:id="@+id/textView7" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtRepsPerSession"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout2"
+                    android:onClick="btnRepsIntervalClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView6"
+                            android:src="@drawable/ic_settings_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/RepsIntervalDialog"
+                                android:id="@+id/textView9" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtRepsInterval"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout3"
+                    android:onClick="btnSessionIntervalClick"
+                    style="@style/myBox">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView7"
+                            android:src="@drawable/ic_settings_dark" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                                android:text="@+string/SessionIntervalDialog"
+                                android:id="@+id/textView11"
+                                android:maxWidth="300dp"
+                                android:singleLine="true" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@+string/lblNotSelected"
+                                android:id="@+id/txtSessionInterval"
+                                android:textColor="@android:color/darker_gray" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

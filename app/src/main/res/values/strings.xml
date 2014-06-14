@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Spoken genre for parrots</string>
+    <string name="training_folder">training_sounds</string>
+
+<!--Creating and Editing Alarms Activity-->
+    <string name="title_activity_create_edit_alarm">Schedule Details</string>
+    <string name="SelectTrainingSoundDialogTitle">Select Training Sound</string>
+    <string name="lblTrainingSound">Training Sound</string>
+    <string name="lblNotSelected">Not Selected</string>
+    <string name="btn_display_extra_settings">Display Extra Settings</string>
+    <string name="btn_hide_extra_settings">Hide Extra Settings</string>
+    <string name="StartTime">Start Time</string>
+    <string name="EndTime">End Time</string>
+    <string name="action_save_schedule">Save</string>
+    <string name="action_cancel_schedule">Cancel</string>
+    <string name="RepsPerSessionDialog">Reps per session (times)</string>
+    <string name="RepsIntervalDialog">Reps interval (seconds)</string>
+    <string name="AttractorSoundDialog">Play attractor sound (times)</string>
+    <string name="SessionIntervalDialog">Interval between sessions (min)</string>
+    <string name="ScheduleCreatedMsg">New schedule has been created</string>
+    <string name="ScheduleErrorMsgFile">Training file not selected</string>
+    <string name="ScheduleErrorMsgTime">Schedule times not specified</string>
+    <string name="ScheduleErrorMsgTimeWrong">Schedule End time is before Start time</string>
+    <string name="AddNewSchedule">Create</string>
+    <string name="schdule_edit_string">Edit</string>
+    <string name="schdule_delete_string">Delete</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="ScheduleUpdatedMsg">Schedule has been updated</string>
+    <string name="ScheduleUpdatedErrorMsg">Error occured while updating schedule</string>
+    <string name="InfoTab">Information</string>
+    <string name="LibraryTab">Library</string>
+    <string name="ScheduleTab">Schedule</string>
+    <string name="btnRecording">Record</string>
+    <string name="btnSelect">Select</string>
+    <string name="basic">basic</string>
+    <string name="StartModeRepeatEveryday">Repeat everyday</string>
+    <string name="StartModeTodayOnly">Today only</string>
+    <string name="StartModeDialogTitle">Select preferred use-case:</string>
+    <string name="StartTab">Start</string>
+    <string name="textAbout">
+It is a long established fact that a reader will be distracted by the readable content of a page when
+        looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+        distribution of letters, as opposed to using Content here, content here, making it look like
+
+
+        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum
+        as their default model text, and a search for lorem ipsum will uncover many web sites still
+        in their infancy. Various versions have evolved over the years, sometimes by accident,
+        sometimes on purpose (injected humour and the like).
+    </string>
+    <string name="tabOverview">Overview</string>
+    <string name="btnStartExecution">Start</string>
+    <string name="btnCancelExecution">Cancel</string>
+
+</resources>

@@ -23,7 +23,7 @@
     <string name="ScheduleErrorMsgFile">Training file not selected</string>
     <string name="ScheduleErrorMsgTime">Schedule times not specified</string>
     <string name="ScheduleErrorMsgTimeWrong">Schedule End time is before Start time</string>
-    <string name="AddNewSchedule">Create</string>
+    <string name="AddNewSchedule">Add new</string>
     <string name="schdule_edit_string">Edit</string>
     <string name="schdule_delete_string">Delete</string>
 

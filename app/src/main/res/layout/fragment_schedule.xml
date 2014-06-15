@@ -3,165 +3,179 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
     android:baselineAligned="false"
     android:background="@drawable/background_a2">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        android:layout_weight="0.1">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@+string/AddNewSchedule"
+            android:id="@+id/btnAddNewSchedule"
+            android:onClick="btnCreateNewScheduleClick"
+            android:clickable="true"
+            android:background="@drawable/panel" />
+
+    </FrameLayout>
 
     <LinearLayout
         style="@style/myBox"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:id="@+id/linearLayout" >
+        android:id="@+id/linearLayout">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp" >
+            android:layout_height="wrap_content">
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout2" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout3" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout4" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout5" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout6" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout7" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout8" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout9" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout10" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout11" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout12" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout13" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout14" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout15" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout16" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout17" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout18" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout19" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout20" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout21" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout22" />
 
             <FrameLayout
                 style="@style/myCalendarBox"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/frameLayout23" />
         </LinearLayout>
     </LinearLayout>
@@ -171,16 +185,6 @@
         android:layout_height="0dp"
         android:id="@+id/lstSchedules"
         android:layout_gravity="top"
-        android:layout_weight="1.00" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@+string/AddNewSchedule"
-        android:id="@+id/btnAddNewSchedule"
-        android:onClick="btnCreateNewScheduleClick"
-        style="@style/myButton"
-        android:clickable="true"
-        android:background="@drawable/hardkey" />
+        android:layout_weight="0.8" />
 
 </LinearLayout>

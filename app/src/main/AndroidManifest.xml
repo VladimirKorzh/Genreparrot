@@ -6,7 +6,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon3"
+        android:icon="@drawable/ttt_96"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity

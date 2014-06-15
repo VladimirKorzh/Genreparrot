@@ -100,9 +100,8 @@ public class MainActivity extends FragmentActivity implements
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Adding Tabs
-        String[] tabs = {getString(R.string.tabOverview),
-                         getString(R.string.LibraryTab),
-                         getString(R.string.ScheduleTab)};
+        String[] tabs = {getString(R.string.ScheduleTab),
+                         getString(R.string.LibraryTab)};
 
         for (String tab_name : tabs) {
             actionBar.addTab(actionBar.newTab().setText(tab_name)

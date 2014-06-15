@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.genreparrot.fragments.MediaFragment;
 import com.genreparrot.fragments.ScheduleFragment;
-import com.genreparrot.fragments.StartFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
     private Context context;
@@ -22,11 +21,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
         switch (index) {
             case 0:
-                return new StartFragment();
+                return new ScheduleFragment();
             case 1:
                 return new MediaFragment();
-            case 2:
-                return new ScheduleFragment();
         }
         return null;
     }
@@ -34,7 +31,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 3;
+        return 2;
     }
 
 }

@@ -6,11 +6,18 @@
     android:baselineAligned="false"
     android:background="@drawable/background_a2">
 
-    <FrameLayout
-        android:layout_width="fill_parent"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="visible"
-        android:layout_weight="0.1">
+        android:id="@+id/lstSchedules"
+        android:layout_gravity="top"
+        android:layout_weight="0.8" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/panel2">
 
         <Button
             android:layout_width="fill_parent"
@@ -19,14 +26,7 @@
             android:id="@+id/btnAddNewSchedule"
             android:onClick="btnCreateNewScheduleClick"
             android:clickable="true"
-            android:background="@drawable/panel2" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/panel2">
+            android:background="@drawable/abc_ab_stacked_transparent_light_holo" />
 
         <LinearLayout
             style="@style/myBox"
@@ -184,13 +184,6 @@
                     android:id="@+id/frameLayout23" />
             </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/lstSchedules"
-        android:layout_gravity="top"
-        android:layout_weight="0.8" />
+    </LinearLayout>
 
 </LinearLayout>

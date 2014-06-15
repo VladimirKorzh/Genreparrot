@@ -40,6 +40,8 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
         filename.setText(String.valueOf(values[position].getFilename()));
 
         sw.setChecked(values[position].getState() == 1);
+
+
         Log.d("debug", "Schedule state "+values[position].getState());
         txtPos.setText(String.valueOf(values[position].getId()));
 

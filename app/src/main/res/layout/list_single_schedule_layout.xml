@@ -26,7 +26,19 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:text="Сова открывай"
+                android:id="@+id/txtFilename"
+                android:textColor="@android:color/background_dark"
+                android:layout_weight="1"
+                android:maxWidth="180dp"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -67,18 +79,6 @@
                     android:layout_weight="1"></LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:text="du.mp3"
-                android:id="@+id/txtFilename"
-                android:layout_gravity="center_vertical"
-                android:textColor="@android:color/background_dark"
-                android:layout_weight="1"
-                android:maxWidth="180dp"
-                android:singleLine="true" />
 
         </LinearLayout>
 

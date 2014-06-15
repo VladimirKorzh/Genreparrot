@@ -5,7 +5,7 @@
     tools:context="com.genreparrot.app.CreateEditSchedule$PlaceholderFragment"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    android:background="@android:color/background_light">
+    android:background="@drawable/background_b2">
 
     <ScrollView
         android:layout_width="fill_parent"

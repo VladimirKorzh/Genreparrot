@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.genreparrot.adapters.MediaPlayerAdapter;
 import com.genreparrot.adapters.TabsPagerAdapter;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import util.IabHelper;
@@ -216,8 +218,31 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        // Releases Google In App Billing references
         if (mHelper != null) mHelper.dispose();
         mHelper = null;
+    }
+
+
+
+    // Returns the full-path list of items in the specified Asset folder
+    public ArrayList<String> getAssetsList(String path){
+        ArrayList<String> files = new ArrayList<String>();
+        String folder = path;
+        String filePath = null;
+
+        try {
+            for (String filename : this.getAssets().list(folder)){
+                filePath = folder+"/"+filename;
+
+                files.add(filePath);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return files;
     }
 
 }

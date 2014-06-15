@@ -18,7 +18,7 @@
     <style name="myCalendarBox" parent="android:Widget">
         <item name="android:minHeight">@dimen/calendarBoxHeight</item>
         <item name="android:minWidth">@dimen/calendarBoxWidth</item>
-        <item name="android:background">@drawable/abc_ab_share_pack_holo_light</item>
+        <item name="android:background">@drawable/calendar_box</item>
         <item name="android:layout_weight">1</item>
     </style>
 
@@ -28,7 +28,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:minHeight">@dimen/calendarBoxHeight</item>
         <item name="android:minWidth">@dimen/calendarBoxWidth</item>
-        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:gravity">bottom</item>
     </style>
 
     <style name="myBottomBar" parent="android:Widget">

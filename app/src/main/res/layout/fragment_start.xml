@@ -23,233 +23,187 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_margin="0dp"
-                android:padding="5dp">
+                android:layout_margin="5dp"
+                android:id="@+id/startScheduleItem" >
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                        android:id="@+id/textView"
-                        android:textStyle="italic"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Monday"
-                        android:id="@+id/textView2"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Tuesday"
-                        android:id="@+id/textView3"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Wednesday"
-                        android:id="@+id/textView8"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Thursday"
-                        android:id="@+id/textView7"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Friday"
-                        android:id="@+id/textView6"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Saturday"
-                        android:id="@+id/textView5"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Sunday"
-                        android:id="@+id/textView4"
-                        style="@style/myCalendarBoxHeader"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo"
-                        android:layout_weight="1" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout13">
+                    android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                        android:text="3"
-                        android:id="@+id/textView9"
-                        style="@style/myCalendarBoxHeader"
-                        android:textStyle="italic"
-                        android:background="@drawable/abc_ab_stacked_transparent_light_holo" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="7:00 - 13:30"
+                        android:id="@+id/txtTime" />
 
-                    <FrameLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/myCalendarBox"></FrameLayout>
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout6" />
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout5" />
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout4" />
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout3" />
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout2" />
-
-                    <FrameLayout
-                        style="@style/myCalendarBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/frameLayout" />
-
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Сова открывай"
+                        android:id="@+id/txtName"
+                        android:paddingLeft="10dp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout10">
+                    android:layout_height="fill_parent" >
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView28"
-                        android:layout_weight="1"
-                        android:textStyle="italic" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" >
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView29"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            style="@style/myCalendarBox"/>
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView30"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout" >
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView31"
-                        android:layout_weight="1" />
+                        </FrameLayout>
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView32"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout2" />
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView33"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout3" />
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView34"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout4" />
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView35"
-                        android:layout_weight="1" />
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout5" />
 
-                    <TextView
-                        style="@style/myCalendarBoxHeader"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView36"
-                        android:layout_weight="1" />
-                </LinearLayout>
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout6" />
 
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout7" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout8" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout9" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout10" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout11" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout12" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout13" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout14" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout15" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout16" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout17" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout18" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout19" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout20" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout21" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout22" />
+
+                        <FrameLayout
+                            style="@style/myCalendarBox"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/frameLayout23" />
+
+                    </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>

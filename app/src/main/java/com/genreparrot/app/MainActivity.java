@@ -16,7 +16,6 @@ import android.support.v4.view.ViewPager;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.genreparrot.adapters.MediaPlayerAdapter;
@@ -197,11 +196,11 @@ public class MainActivity extends FragmentActivity implements
                     am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
                 }
 
-                // Update UI
-                Button btnStart = (Button) findViewById(R.id.btnStartTraining);
-                Button btnCancel = (Button) findViewById(R.id.btnCancelAllSchedules);
-                btnCancel.setVisibility(View.VISIBLE);
-                btnStart.setVisibility(View.GONE);
+//                // Update UI
+//                Button btnStart = (Button) findViewById(R.id.btnStartTraining);
+//                Button btnCancel = (Button) findViewById(R.id.btnCancelAllSchedules);
+//                btnCancel.setVisibility(View.VISIBLE);
+//                btnStart.setVisibility(View.GONE);
             }
         });
 

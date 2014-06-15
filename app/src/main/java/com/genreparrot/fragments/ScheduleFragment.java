@@ -41,13 +41,12 @@ public class ScheduleFragment extends Fragment
         ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
 
         lst.setAdapter(ad);
-
-        super.onResume();
     }
 
     @Override
     public void onResume(){
         getList();
+        super.onResume();
     }
 
     @Override

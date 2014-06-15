@@ -226,23 +226,4 @@ public class MainActivity extends FragmentActivity implements
 
 
 
-    // Returns the full-path list of items in the specified Asset folder
-    public ArrayList<String> getAssetsList(String path){
-        ArrayList<String> files = new ArrayList<String>();
-        String folder = path;
-        String filePath = null;
-
-        try {
-            for (String filename : this.getAssets().list(folder)){
-                filePath = folder+"/"+filename;
-
-                files.add(filePath);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return files;
-    }
-
 }

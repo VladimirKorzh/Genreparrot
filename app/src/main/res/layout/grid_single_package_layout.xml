@@ -5,12 +5,12 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        style="@style/myBox"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:background="@drawable/box">
 
         <LinearLayout
             android:orientation="vertical"
@@ -20,15 +20,28 @@
             android:layout_gravity="center"
             android:layout_margin="5dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgHeader"
-                android:visibility="visible"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@drawable/header"
-                android:layout_gravity="center" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imgHeader"
+                    android:visibility="visible"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/header"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/available"
+                    android:layout_alignRight="@+id/imgHeader"
+                    android:id="@+id/imgAvailable" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -40,6 +53,7 @@
                 android:gravity="center"
                 android:lines="2"
                 android:textStyle="bold" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

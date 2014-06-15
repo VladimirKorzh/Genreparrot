@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.genreparrot.adapters.AssetsAdapter;
@@ -23,16 +24,25 @@ public class MediaFragment extends Fragment
 
     }
 
+
     @Override
     public void onResume(){
         ArrayList<String> arr = new ArrayList<String>();
         Log.d("debug", "Media onResume");
         arr = new AssetsAdapter().getAssetsList(getActivity().getBaseContext(), "packages");
 
-        StoreGridAdapter ad = new StoreGridAdapter(getActivity(), arr);
+        final StoreGridAdapter ad = new StoreGridAdapter(getActivity(), arr);
         GridView grid = (GridView) root.findViewById(R.id.gridStore);
 
         grid.setAdapter(ad);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ad.purchasePackageDialog(i);
+            }
+        });
+
+
         super.onResume();
     }
 

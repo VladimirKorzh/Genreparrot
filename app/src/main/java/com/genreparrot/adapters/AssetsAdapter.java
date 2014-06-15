@@ -13,17 +13,39 @@ import java.util.ArrayList;
  */
 public class AssetsAdapter {
 
+
+
+
+    // Overloaded method for getting the default exclusion list
+    public static ArrayList<String> getAssetsList(Context context, String path) {
+        ArrayList<String> except = new ArrayList<String>();
+        except.add(".txt");
+        except.add(".png");
+        except.add(".xml");
+        return getAssetsList(context, path, except);
+    }
+
     // Returns the full-path list of items in the specified Asset folder
-    public static ArrayList<String> getAssetsList(Context context, String path){
+    // except the ones with specified extensions
+    public static ArrayList<String> getAssetsList(Context context, String path, ArrayList<String> except){
         ArrayList<String> files = new ArrayList<String>();
         String folder = path;
         String filePath = null;
 
         try {
             for (String filename : context.getAssets().list(folder)){
-                filePath = folder+"/"+filename;
-                Log.d("debug", "AssetsAdapter found file: " + filePath);
-                files.add(filePath);
+                boolean flag = false;
+                Log.d("debug", "AssetsAdapter found file: " + filename);
+                for (String exc : except) {
+                    if (filename.endsWith(exc)) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    filePath = folder + "/" + filename;
+                    files.add(filePath);
+                }
             }
 
         } catch (IOException e) {

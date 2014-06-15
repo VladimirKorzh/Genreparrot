@@ -103,7 +103,8 @@
             android:layout_gravity="center"
             android:textOff=''
             android:textOn=''
-            android:switchMinWidth="56dp"/>
+            android:switchMinWidth="56dp"
+            style="@style/AppTheme" />
 
     </LinearLayout>
 

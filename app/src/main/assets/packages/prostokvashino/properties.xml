@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Простоквашино</entry>
+
+<entry key="budte_zdorovi">Будьте здоровы</entry>
+<entry key="chto_to_kowachim_pahnet">Что-то кошачим пахнет</entry>
+<entry key="eto_ja_pechkin">Это я - почтальон печкин</entry>
+<entry key="kto_tam_kto_tam">Кто там, кто там?</entry>
+<entry key="popalsa">Попался!</entry>
+
+</properties>

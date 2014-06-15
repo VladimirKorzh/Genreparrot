@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.genreparrot.app.R;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class StoreGridAdapter extends ArrayAdapter<String> {
@@ -37,10 +36,9 @@ public class StoreGridAdapter extends ArrayAdapter<String> {
         TextView caption = (TextView) rowView.findViewById(R.id.txtCaption);
 
         // set the image of the requested package
-        AssetManager assetManager = getContext().getAssets();
-        InputStream istr = null;
+        AssetManager am = getContext().getAssets();
         try {
-            Bitmap bmp= BitmapFactory.decodeStream(am.open(values[position]+"/header.png"));
+            Bitmap bmp= BitmapFactory.decodeStream(am.open(values.get(position) +"/header.png"));
             img.setImageBitmap(bmp);
 
         } catch (IOException e) {
@@ -48,7 +46,8 @@ public class StoreGridAdapter extends ArrayAdapter<String> {
         }
 
         // set the caption
-        caption.setText(values[position]);
+        String text = AssetsAdapter.readTxtFile(mContext,values.get(position)+"/caption.txt");
+        caption.setText(text);
 
         return rowView;
     }

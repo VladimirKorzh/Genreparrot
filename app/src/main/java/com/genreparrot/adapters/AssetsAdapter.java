@@ -1,8 +1,11 @@
 package com.genreparrot.adapters;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +22,7 @@ public class AssetsAdapter {
         try {
             for (String filename : context.getAssets().list(folder)){
                 filePath = folder+"/"+filename;
-
+                Log.d("debug", "AssetsAdapter found file: " + filePath);
                 files.add(filePath);
             }
 
@@ -29,4 +32,30 @@ public class AssetsAdapter {
         return files;
     }
 
+    public static String readTxtFile(Context context, String filepath){
+        StringBuilder contents = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(context.getAssets().open(filepath), "UTF-8"));
+
+            // do reading, usually loop until end of file reading
+            String mLine = reader.readLine();
+            while (mLine != null) {
+                mLine = reader.readLine();
+                contents.append(mLine);
+            }
+        } catch (IOException e) {
+            //log the exception
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return contents.toString();
+    }
 }

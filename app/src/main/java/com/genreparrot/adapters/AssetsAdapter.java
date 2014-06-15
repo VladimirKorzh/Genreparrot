@@ -42,8 +42,8 @@ public class AssetsAdapter {
             // do reading, usually loop until end of file reading
             String mLine = reader.readLine();
             while (mLine != null) {
-                mLine = reader.readLine();
                 contents.append(mLine);
+                mLine = reader.readLine();
             }
         } catch (IOException e) {
             //log the exception

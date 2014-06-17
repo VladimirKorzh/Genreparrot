@@ -224,7 +224,6 @@
                     android:layout_height="wrap_content"
                     android:text="@+string/btn_display_extra_settings"
                     android:id="@+id/btnExtraSettings"
-                    android:onClick="btnExtraSettingsClick"
                     android:visibility="visible"
                     style="@style/myBox" />
 
@@ -235,7 +234,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/layoutExtraSettings"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:orientation="horizontal"

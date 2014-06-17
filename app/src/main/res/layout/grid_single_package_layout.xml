@@ -32,7 +32,6 @@
                     android:visibility="visible"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/header"
                     android:layout_gravity="center" />
 
                 <ImageView

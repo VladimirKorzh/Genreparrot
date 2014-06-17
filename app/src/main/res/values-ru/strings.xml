@@ -14,7 +14,7 @@
     <string name="RepsPerSessionDialog">Кол-во повторений за сессию</string>
     <string name="RepsIntervalDialog">Интервал повторений (сек)</string>
     <string name="AttractorSoundDialog">Кол-во звучаний привлекатора</string>
-    <string name="SessionIntervalDialog">Интервал между сессиями (мин)</string>
+    <string name="SessionIntervalDialog">Минут между сессиями </string>
 
     <!--Action buttons in User interface-->
     <string name="AddNewSchedule">Добавить</string>
@@ -39,7 +39,7 @@
 
     <!--Tabs on top-->
     <string name="LibraryTab">Библиотека</string>
-    <string name="ScheduleTab">График</string>
+    <string name="ScheduleTab">Сессии</string>
 
     <!--Messages displayed during startup-->
     <string name="loadingDialogTitle">Загрузка...</string>

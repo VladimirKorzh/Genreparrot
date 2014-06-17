@@ -1,7 +1,5 @@
 package com.genreparrot.app;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -20,11 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,8 +35,6 @@ import java.util.ArrayList;
 
 
 public class CreateEditSchedule extends ActionBarActivity {
-
-    private LinearLayout extraSettings;
 
     public ArrayList<String> GetListOfTrainingFiles(){
         ArrayList<String> arr = new ArrayList<String>();
@@ -79,7 +71,6 @@ public class CreateEditSchedule extends ActionBarActivity {
     public void onResume()
     {
         initVolumeControls();
-        extraSettings = (LinearLayout) findViewById(R.id.layoutExtraSettings);
         super.onResume();
     }
 
@@ -182,21 +173,22 @@ public class CreateEditSchedule extends ActionBarActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 String str = String.format("%d:%02d", hour, minute);
+                assert finalT2 != null;
                 finalT2.setText(str);
             }
         };
 
-        if (t.getText().equals(getString(R.string.lblNotSelected))){
+        assert t != null;
+        if (getString(R.string.lblNotSelected).equals(t.getText())){
             Time today = new Time();
             today.setToNow();
-            final TextView finalT1 = t;
             new TimePickerDialog(this, listener, today.hour,today.minute,true).show();
         }
         else{
+            assert (t.getText()) != null;
             String[] parts = ((String)t.getText()).split(":");
             int hours = Integer.valueOf(parts[0]);
             int minutes = Integer.valueOf(parts[1]);
-            final TextView finalT = t;
             new TimePickerDialog(this, listener, hours,minutes,true).show();
         }
     }
@@ -205,75 +197,6 @@ public class CreateEditSchedule extends ActionBarActivity {
         String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) t.getText());
         SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), filepath);
     }
-    public void btnExtraSettingsClick(View view){
-        Button b = (Button) findViewById(R.id.btnExtraSettings);
-        if (extraSettings.getVisibility()==View.GONE){
-
-            b.setText(getString(R.string.btn_hide_extra_settings));
-            //set Visible
-            extraSettings.setVisibility(View.VISIBLE);
-
-            final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-            final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-            extraSettings.measure(widthSpec, heightSpec);
-
-            ValueAnimator mAnimator = slideAnimator(0, extraSettings.getMeasuredHeight());
-            mAnimator.start();
-        }
-        else {
-            b.setText(getString(R.string.btn_display_extra_settings));
-            int finalHeight = extraSettings.getHeight();
-
-            ValueAnimator mAnimator = slideAnimator(finalHeight, 0);
-
-            mAnimator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    //Height=0, but it sets visibility to GONE
-                    extraSettings.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
-            mAnimator.start();
-        }
-
-    }
-    private ValueAnimator slideAnimator(int start, int end) {
-
-        ValueAnimator animator = ValueAnimator.ofInt(start, end);
-
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                //Update Height
-                int value = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = extraSettings.getLayoutParams();
-                layoutParams.height = value;
-                LinearLayout item = (LinearLayout) findViewById(R.id.linearLayout3);
-                ScrollView scroller = (ScrollView) findViewById(R.id.scrollView);
-                scroller.smoothScrollTo(0, item.getBottom());
-                extraSettings.setLayoutParams(layoutParams);
-            }
-        });
-        return animator;
-    }
-
-
-
 
     public void btnTrainingSoundClick(View view){
         final ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, GetListOfTrainingFiles());
@@ -318,6 +241,7 @@ public class CreateEditSchedule extends ActionBarActivity {
         return true;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -337,11 +261,11 @@ public class CreateEditSchedule extends ActionBarActivity {
             TextView sessioninterval = (TextView) findViewById(R.id.txtSessionInterval);
             TextView attractortimes = (TextView) findViewById(R.id.txtAttractorSound);
 
-            if ( filename.getText().toString().equals(getString(R.string.lblNotSelected) ) ) {
+            if (filename.getText().toString().equals(getString(R.string.lblNotSelected))) {
                 Toast.makeText(this, getString(R.string.ScheduleErrorMsgFile), Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
             }
-            if (starttime.getText().toString().equals(getString(R.string.lblNotSelected)) || endtime.getText().toString().equals(getString(R.string.lblNotSelected))) {
+            if (getString(R.string.lblNotSelected).equals(starttime.getText().toString()) || endtime.getText().toString().equals(getString(R.string.lblNotSelected))) {
                 Toast.makeText(this, getString(R.string.ScheduleErrorMsgTime), Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
             }
@@ -360,6 +284,7 @@ public class CreateEditSchedule extends ActionBarActivity {
             SchDao.open();
 
             Bundle b = getIntent().getExtras();
+            assert b != null;
             int scheduleID = b.getInt("scheduleID");
             String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) filename.getText());
             if (scheduleID != -1) {
@@ -387,7 +312,7 @@ public class CreateEditSchedule extends ActionBarActivity {
             }
             else {
                 // creating new
-                Schedule sch = SchDao.createSchedule(
+                SchDao.createSchedule(
                         filepath,
                         volume.getProgress(),
 
@@ -428,7 +353,7 @@ public class CreateEditSchedule extends ActionBarActivity {
     @Override
     public void onPause(){
         super.onPause();
-        if (isFinishing() == true){
+        if (isFinishing()){
             overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
         }
     }

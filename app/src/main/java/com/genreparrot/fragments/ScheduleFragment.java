@@ -19,29 +19,31 @@ import com.genreparrot.app.R;
 import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleFragment extends Fragment
 {
-    private ScheduleListAdapter ad;
+    public ScheduleListAdapter ad;
     private List<Schedule> lstSch;
     private View root;
-
 
     public ScheduleFragment(){
     }
 
-    private void getList(){
+    public void getList(){
         ScheduleDAO SchDao = new ScheduleDAO(getActivity());
         SchDao.open();
 
         List<Schedule> lstSch = SchDao.getAllSchedules();
-        Schedule[] arr = lstSch.toArray(new Schedule[lstSch.size()]);
-        ScheduleListAdapter ad = new ScheduleListAdapter(getActivity(), arr);
-        ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
-
-        lst.setAdapter(ad);
+        ad.clear();
+        ad.addAll(lstSch);
+        ad.notifyDataSetChanged();
     }
+
+
+
+
 
     @Override
     public void onResume(){
@@ -53,6 +55,10 @@ public class ScheduleFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         root = inflater.inflate(R.layout.fragment_schedule, container, false);
+        ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
+
+        ad = new ScheduleListAdapter(getActivity(), new ArrayList<Schedule>());
+        lst.setAdapter(ad);
         registerForContextMenu((ListView) root.findViewById(R.id.lstSchedules));
         return root;
     }
@@ -72,24 +78,29 @@ public class ScheduleFragment extends Fragment
         ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
         ScheduleListAdapter ad = (ScheduleListAdapter) lst.getAdapter();
         Schedule s = ad.getItem((int) info.id);
-
+        ScheduleDAO scheduleDAO = new ScheduleDAO(getActivity());
+        scheduleDAO.open();
         switch(item.getItemId()){
             case R.id.schedule_delete_item:
-                ScheduleDAO scheduleDAO = new ScheduleDAO(getActivity());
-                scheduleDAO.open();
                 scheduleDAO.deleteSchedule(s);
-                scheduleDAO.close();
+
                 getList();
-                return true;
+                ad.actionStartTraining();
+                break;
             case R.id.schedule_edit_item:
+                scheduleDAO.toggleSchedule((int) s.getId(),0);
+                ad.actionStartTraining();
+
                 Intent intent = new Intent(getActivity(), CreateEditSchedule.class);
                 Bundle b = new Bundle();
                 b.putInt("scheduleID", (int) s.getId());
                 intent.putExtras(b);
                 startActivity(intent);
                 getActivity().overridePendingTransition( R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-                return true;
+                break;
         }
+
+        scheduleDAO.close();
         return super.onContextItemSelected(item);
     }
 }

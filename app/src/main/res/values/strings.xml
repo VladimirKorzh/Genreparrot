@@ -59,7 +59,10 @@
     <string name="btnStartExecution">Start</string>
     <string name="btnCancelExecution">Cancel</string>
     <string name="btn_Cancel">Cancel</string>
-    <string name="btn_Purchase">Purchase</string>
+    <string name="btn_Purchase">Purchase All</string>
+    <string name="btnGetMore">Get More</string>
+    <string name="btn_Back">Back</string>
+    <string name="btn_ThankYou">Thank you for purchasing</string>
 
 
 </resources>

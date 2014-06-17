@@ -64,6 +64,21 @@ public class Schedule implements Parcelable {
         return t;
     }
 
+    public long timeTodayDate(long value){
+        Time t = new Time();
+        t.setToNow();
+
+        Time t1 = new Time();
+        t1.set(value);
+
+        t.hour = t1.hour;
+        t.minute = t1.minute;
+
+        return t.toMillis(true);
+    }
+
+
+
     public void print() {
         Time t;
         Log.d("debug", "Id: "+ this.getId());
@@ -83,7 +98,8 @@ public class Schedule implements Parcelable {
     }
 
     public long getStarttime() {
-        return starttime;
+
+        return timeTodayDate(starttime);
     }
 
     public void setStarttime(long starttime) {
@@ -91,7 +107,7 @@ public class Schedule implements Parcelable {
     }
 
     public long getEndtime() {
-        return endtime;
+        return timeTodayDate(endtime);
     }
 
     public void setEndtime(long endtime) {

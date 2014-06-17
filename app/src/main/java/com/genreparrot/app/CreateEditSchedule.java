@@ -30,12 +30,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.genreparrot.adapters.AssetsHelper;
 import com.genreparrot.adapters.SoundBatchPlayer;
+import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
 import com.genreparrot.fragments.CreateEditFragment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -44,21 +45,15 @@ public class CreateEditSchedule extends ActionBarActivity {
     private LinearLayout extraSettings;
 
     public ArrayList<String> GetListOfTrainingFiles(){
-        ArrayList<String> files = new ArrayList<String>();
+        ArrayList<String> arr = new ArrayList<String>();
 
-        try {
-            for (String filePath : this.getAssets().list(getString(R.string.basic))){
-                filePath = getString(R.string.basic)+"/"+filePath;
-
-                Log.d("debug", "training file found: "+filePath);
-
-                files.add(filePath);
+        for (SoundPackage sp : AssetsHelper.getInstance().packages_loaded.values()){
+            if (sp.owned){
+                arr.addAll(sp.files.values());
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return files;
+
+        return arr;
     }
 
     @Override
@@ -71,6 +66,7 @@ public class CreateEditSchedule extends ActionBarActivity {
                     .add(R.id.container, placeholderFragment)
                     .commit();
         }
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
     }
 
@@ -95,9 +91,6 @@ public class CreateEditSchedule extends ActionBarActivity {
             AudioManager audioManager;
             volumeSeekbar = (SeekBar) findViewById(R.id.seekVolumeMusic);
             audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-
-            Log.d("debug", "Max vol: " + String.valueOf(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)));
-            Log.d("debug", "Cur vol: " + audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
 
             volumeSeekbar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
             volumeSeekbar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
@@ -173,7 +166,6 @@ public class CreateEditSchedule extends ActionBarActivity {
                 });
         builder.show();
     }
-
     public void btnTimeClick(View view){
         TextView t = null;
         switch( view.getId() ){
@@ -208,12 +200,11 @@ public class CreateEditSchedule extends ActionBarActivity {
             new TimePickerDialog(this, listener, hours,minutes,true).show();
         }
     }
-
     public void btnPlayOnce(View view){
         TextView t = (TextView) findViewById(R.id.txtTrainingSound);
-        SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), (String) t.getText());
+        String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) t.getText());
+        SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), filepath);
     }
-
     public void btnExtraSettingsClick(View view){
         Button b = (Button) findViewById(R.id.btnExtraSettings);
         if (extraSettings.getVisibility()==View.GONE){
@@ -261,7 +252,6 @@ public class CreateEditSchedule extends ActionBarActivity {
         }
 
     }
-
     private ValueAnimator slideAnimator(int start, int end) {
 
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
@@ -282,6 +272,9 @@ public class CreateEditSchedule extends ActionBarActivity {
         return animator;
     }
 
+
+
+
     public void btnTrainingSoundClick(View view){
         final ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, GetListOfTrainingFiles());
 
@@ -292,10 +285,11 @@ public class CreateEditSchedule extends ActionBarActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         TextView t = (TextView) findViewById(R.id.txtTrainingSound);
                         t.setText(ad.getItem(i));
-                        SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), ad.getItem(i));
+                        String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias(ad.getItem(i));
+                        SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), filepath);
                     }
                 })
-                .setNeutralButton(R.string.btnRecording, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.btnRecording, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
@@ -311,6 +305,10 @@ public class CreateEditSchedule extends ActionBarActivity {
                 .setCancelable(false)
                 .show();
     }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -363,8 +361,11 @@ public class CreateEditSchedule extends ActionBarActivity {
 
             Bundle b = getIntent().getExtras();
             int scheduleID = b.getInt("scheduleID");
+            String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) filename.getText());
             if (scheduleID != -1) {
-                boolean sch = SchDao.updateSchedule(scheduleID,(String) filename.getText(),
+                // updating old
+                boolean sch = SchDao.updateSchedule(scheduleID,
+                        filepath,
                         volume.getProgress(),
 
                         Schedule.timeStringToMillis(starttime.getText().toString()),
@@ -386,7 +387,8 @@ public class CreateEditSchedule extends ActionBarActivity {
             }
             else {
                 // creating new
-                Schedule sch = SchDao.createSchedule((String) filename.getText(),
+                Schedule sch = SchDao.createSchedule(
+                        filepath,
                         volume.getProgress(),
 
                         Schedule.timeStringToMillis(starttime.getText().toString()),

@@ -7,7 +7,6 @@
 
     <style name="myBox" parent="android:Widget">
         <item name="android:background">@drawable/box_style</item>
-        <item name="android:clickable">true</item>
     </style>
 
     <style name="myButton" parent="android:Widget">

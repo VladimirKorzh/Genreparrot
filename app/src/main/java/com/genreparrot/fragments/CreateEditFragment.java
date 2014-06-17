@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.genreparrot.adapters.AssetsHelper;
 import com.genreparrot.app.R;
 import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
@@ -55,7 +56,10 @@ public class CreateEditFragment extends Fragment {
             }
             else {
                 // load it from db
-                filename.setText(sch.getFilename());
+
+                /** Dirty hack to make sure we store the filename, but show the alias to user */
+                String alias = AssetsHelper.getInstance().getAliasFromFilepath(sch.getFilename());
+                filename.setText(alias);
                 volume.setProgress(sch.getVolume());
 
                 starttime.setText(Schedule.timeMillisToString(sch.getStarttime()));

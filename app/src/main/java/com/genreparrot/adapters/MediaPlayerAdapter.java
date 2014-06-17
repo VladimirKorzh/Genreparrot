@@ -37,7 +37,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         return instance;
     }
 
-    public void debugTime(String name, Time t){
+    public static void debugTime(String name, Time t){
         Log.d("debug", "Time: "+name+" "+t.hour+":"+t.minute+":"+t.second);
     }
 
@@ -50,7 +50,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         currentTime.setToNow();
         debugTime("current time:",currentTime);
 
-        // Print basic debug info about the schedule
+        // Print packages.basic debug info about the schedule
         s.print();
 
         // check if schedule has start time set in the past and modify it to the current time
@@ -127,7 +127,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         currentTime.setToNow();
         debugTime("current time:",currentTime);
 
-        // Print basic debug info about the schedule
+        // Print packages.basic debug info about the schedule
         s.print();
 
         //  Schedule time is up. Stop it from repeating.

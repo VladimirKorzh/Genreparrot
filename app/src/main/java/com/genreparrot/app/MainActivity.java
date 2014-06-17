@@ -2,116 +2,277 @@ package com.genreparrot.app;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.LoadingDialog;
 import com.genreparrot.adapters.MediaPlayerAdapter;
+import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.adapters.TabsPagerAdapter;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import com.genreparrot.fragments.ScheduleFragment;
 
 import util.IabHelper;
 import util.IabResult;
+import util.Inventory;
 
-public class MainActivity extends FragmentActivity implements
-        ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
+    // TAG is used in debug output
+    static final String TAG = "MainActivity";
+
+    // Global references to action bar and viewPager
     private ViewPager viewPager;
     private ActionBar actionBar;
-    IabHelper mHelper;
+    public TabsPagerAdapter mAdapter;
 
-    static final String ACTIVE_TAB = "activeTab";
+    LoadingDialog l;
+    AssetsHelper a;
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-        savedInstanceState.putInt(ACTIVE_TAB, viewPager.getCurrentItem());
 
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
+
+    // The helper object
+    public IabHelper mHelper;
+
+    // In-app purchases codes
+    static final String SKU_PROSTOKVASHINO_1 = "pkg_prostokvashino1";
+
+    public IabHelper getIabHelper(){
+        return mHelper;
     }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
+    public void initiateAppStore() {
+        // Applications public key
+        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiZ9RhHkwfm9K851Q86pWuWfdBoorVQkI+DCdSquJB6uMt+FzeDgD3fdCzjAvzRzP9NW9zlVgoh7CZhzgv+9EYaRHfaOkX1dBRBvGOyo3wu6q1r56s9yLoDLT2GeAJuHXVFtOQqsPOK0ME8Af5UWtYhf3YIkBLmOX4eFDCGuwTKNRJ5IarAwDVs+ZPhgZeDyTBGF+xEStqYg/htQKbYh924LRYmMRmIOVt9Jw/j5nPKqGVFpS7qD/fZOzl3FeD+wp0D7XBC/zsBR/ex9CxaWrtJ/xMb9ktQyP1cc7Pzob7TnjVa/ggKSJsOdjXsCwe4gbssJ/Pr4TM2pWp+eMO33RDwIDAQAB";
 
-        // Restore state members from saved instance
-        actionBar.setSelectedNavigationItem(savedInstanceState.getInt(ACTIVE_TAB));
-        viewPager.setCurrentItem(savedInstanceState.getInt(ACTIVE_TAB));
+        // Create the helper, passing it our context and the public key to verify signatures with
+        Log.d(TAG, "Creating IAB helper.");
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        // enable debug logging (for a production application, you should TODO set this to false).
+        mHelper.enableDebugLogging(true);
+
+        // Start setup. This is asynchronous and the specified listener
+        // will be called once setup completes.
+        Log.d(TAG, "Starting setup.");
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+                    alert("Problem setting up in-app billing: " + result);
+                    l.loading.hide();
+                    return;
+                }
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (mHelper == null) return;
+
+                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                Log.d(TAG, "Setup successful.");
+                l.changeMsg("Fetching available packages list...");
+                mHelper.queryInventoryAsync(false, AssetsHelper.getInstance().packages_found, queryAvailablePackagesListener);
+
+            }
+        });
     }
+
+
+    // Listener that's called when we finish querying the items and subscriptions we own
+    IabHelper.QueryInventoryFinishedListener queryAvailablePackagesListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query store inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
+
+            // Is it a failure?
+            if (result.isFailure()) {
+                alert("Failed to query store inventory inventory");
+                l.loading.hide();
+                return;
+            }
+            else {
+                Log.d(TAG, "Query store inventory was successful.");
+            }
+
+            Log.d(TAG, "Now initiating owned items query");
+            l.changeMsg("Getting a list of owned products");
+            mHelper.queryInventoryAsync(queryOwnedPackagesListener);
+        }
+    };
+
+    IabHelper.QueryInventoryFinishedListener queryOwnedPackagesListener
+            = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result,
+                                             Inventory inventory) {
+
+            if (result.isFailure()) {
+                alert("Failed to query owned items");
+                l.loading.hide();
+                return;
+            }
+            else {
+                Log.d(TAG, "Owned items query successful.");
+                for (String sku : AssetsHelper.getInstance().packages_found){
+                    if (inventory.hasPurchase(sku)){
+                        AssetsHelper.getInstance().packages_loaded.get(sku).owned = true;
+                        Log.d(TAG, "User owns: "+sku);
+                    }
+                }
+                l.loading.hide();
+            }
+        }
+    };
+
+
+
+
+    private class LoadApplicationFlow extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            publishProgress("Loading sound packages...");
+            a = new AssetsHelper(getApplication());
+
+
+            // Get the list of packages in the current distribution
+            a.packages_found = a.getSoundPackagesNames(getApplication());
+
+            // Load all the packages that are found
+            for (String pkg : a.packages_found){
+                SoundPackage sp = new SoundPackage(getApplication(), AssetsHelper.getPkg_path(pkg));
+                publishProgress("Sound package loaded: "+ sp.props.getProperty("caption"));
+                a.packages_loaded.put(pkg, sp);
+                Log.d(TAG, "Package loaded: "+ pkg);
+            }
+
+
+            // Load google In-App Store library and connect
+            publishProgress("Initiating app-store...");
+            initiateAppStore();
+
+
+
+
+            return "Success";
+        }
+
+        @Override
+        protected void onPostExecute(String res) {
+            setupUI();
+            // make sure we start the flow every run.
+            Intent intent = new Intent(getApplication(), MediaPlayerAdapter.class);
+            boolean alarmUp = (PendingIntent.getBroadcast(getApplication(), (int) MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID,
+                    intent, PendingIntent.FLAG_NO_CREATE) != null);
+
+            if (alarmUp)
+            {
+                Log.d(TAG, "Alarm is already active");
+            }
+            else {
+                Log.d(TAG,"Alarm wasn't set. Setting it now.");
+                ((ScheduleFragment) mAdapter.getItem(1)).ad.actionStartTraining();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            l.changeMsg("Initializing...");
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            runOnUiThread(l.changeMsg(values[0]));
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // creating loading dialog
+        l = new LoadingDialog(this);
+        new LoadApplicationFlow().execute("");
+    }
 
 
 
+    // TODO Figure out if this is needed
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+        if (mHelper == null) return;
+
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        else {
+            Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
+    }
+
+    // We're being destroyed. It's important to dispose of the helper here!
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // very important:
+        Log.d(TAG, "Destroying helper.");
+        if (mHelper != null) {
+            mHelper.dispose();
+            mHelper = null;
+        }
+        l = null;
+    }
 
 
-//        // Initiate In-App billing TODO Secute Public Key
-/*      To keep your public key safe from malicious users and hackers,
-        do not embed it in any code as a literal string. Instead, construct the string
-        at runtime from pieces or use bit manipulation (for example, XOR with some other string)
-        to hide the actual key. The key itself is not secret information, but you
-        do not want to make it easy for a hacker or malicious user to replace the public key with another key.*/
-
-        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiZ9RhHkwfm9K851Q86pWuWfdBoorVQkI+DCdSquJB6uMt+FzeDgD3fdCzjAvzRzP9NW9zlVgoh7CZhzgv+9EYaRHfaOkX1dBRBvGOyo3wu6q1r56s9yLoDLT2GeAJuHXVFtOQqsPOK0ME8Af5UWtYhf3YIkBLmOX4eFDCGuwTKNRJ5IarAwDVs+ZPhgZeDyTBGF+xEStqYg/htQKbYh924LRYmMRmIOVt9Jw/j5nPKqGVFpS7qD/fZOzl3FeD+wp0D7XBC/zsBR/ex9CxaWrtJ/xMb9ktQyP1cc7Pzob7TnjVa/ggKSJsOdjXsCwe4gbssJ/Pr4TM2pWp+eMO33RDwIDAQAB";
-        // compute your public key and store it in base64EncodedPublicKey
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    Log.d("debug", "Problem setting up In-app Billing: " + result);
-                }
-                else {
-                    Log.d("debug", " Hooray, IAB is fully set up!");
-                }
-            }
-        });
-
+    public void setupUI(){
+        // Disable unnecessary elements
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setDisplayShowHomeEnabled(false);
 
+        // Set default volume control buttons reaction
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
-        TabsPagerAdapter mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), this);
 
+        // Create tabs adapter that will handle our fragments
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), this);
+
+        // set everything up
         viewPager.setAdapter(mAdapter);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        // Set the amount of pages to hold in memory
+        viewPager.setOffscreenPageLimit(2);
+
         // Adding Tabs
-        String[] tabs = {getString(R.string.ScheduleTab),
-                         getString(R.string.LibraryTab)};
+        String[] tabs = {getString(R.string.LibraryTab), getString(R.string.ScheduleTab)};
 
         for (String tab_name : tabs) {
             actionBar.addTab(actionBar.newTab().setText(tab_name)
-                                               .setTabListener(this));
+                    .setTabListener(this));
         }
 
-        /**
-         * on swiping the viewpager make respective tab selected
-         * */
+        // swiping the viewpager make respective tab selected
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -129,14 +290,49 @@ public class MainActivity extends FragmentActivity implements
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-
-        // Allow user to select files from mediastore
-        //Intent pickAudioIntent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.INTERNAL_CONTENT_URI);
-        //startActivityForResult(pickAudioIntent, 0);
-
-
-
     }
+
+
+
+    // Display a simple message to the user
+    public void alert(String message) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(this);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", null);
+        Log.d(TAG, "Showing alert dialog: " + message);
+        bld.create().show();
+    }
+
+
+    // Enables or disables the "please wait" screen.
+/*    public void setWaitScreen(boolean set) {
+        findViewById(R.id.gridStore).setVisibility(set ? View.GONE : View.VISIBLE);
+        findViewById(R.id.imgWait).setVisibility(set ? View.VISIBLE : View.GONE);
+    }*/
+/*
+static final String ACTIVE_TAB = "activeTab";
+@Override
+public void onSaveInstanceState(Bundle savedInstanceState) {
+// Save the user's current game state
+savedInstanceState.putInt(ACTIVE_TAB, viewPager.getCurrentItem());
+
+// Always call the superclass so it can save the view hierarchy state
+super.onSaveInstanceState(savedInstanceState);
+}
+
+@Override
+public void onRestoreInstanceState(Bundle savedInstanceState) {
+// Always call the superclass so it can restore the view hierarchy
+super.onRestoreInstanceState(savedInstanceState);
+
+// Restore state members from saved instance
+actionBar.setSelectedNavigationItem(savedInstanceState.getInt(ACTIVE_TAB));
+viewPager.setCurrentItem(savedInstanceState.getInt(ACTIVE_TAB));
+}
+*/
+
+
+
 
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -160,70 +356,4 @@ public class MainActivity extends FragmentActivity implements
         startActivity(intent);
         overridePendingTransition( R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
-
-
-    public void btnStartTrainingClick(View v){
-
-        final CharSequence[] items = {getString(R.string.StartModeRepeatEveryday), getString(R.string.StartModeTodayOnly)};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.StartModeDialogTitle));
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-
-                // get the alarm manager reference
-                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                // create the intent for the scheduled task
-                Intent intent = new Intent(getBaseContext(), MediaPlayerAdapter.class);
-
-                Time t = new Time();
-                t.setToNow();
-                t.normalize(true);
-                t.hour = 0;
-                t.minute = 0;
-                t.second = 1;
-
-                if (item == 0) {
-                    // set the alarm to be repeated every day at 0:0:1
-                    PendingIntent pi = PendingIntent.getBroadcast(getBaseContext(), (int) MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                    am.setRepeating(AlarmManager.RTC_WAKEUP, t.toMillis(true), TimeUnit.DAYS.toMillis(1), pi);
-                    MediaPlayerAdapter mpa = MediaPlayerAdapter.getInstance();
-                    mpa.list.add(MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID);
-                }
-                if (item == 1) {
-                    // fire alarm only once for today
-                    PendingIntent pi = PendingIntent.getBroadcast(getBaseContext(), (int) MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID, intent, PendingIntent.FLAG_ONE_SHOT);
-                    am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
-                }
-
-//                // Update UI
-//                Button btnStart = (Button) findViewById(R.id.btnStartTraining);
-//                Button btnCancel = (Button) findViewById(R.id.btnCancelAllSchedules);
-//                btnCancel.setVisibility(View.VISIBLE);
-//                btnStart.setVisibility(View.GONE);
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    public void btnCancelAllSchedulesClick(View v){
-        MediaPlayerAdapter mpa = MediaPlayerAdapter.getInstance();
-        mpa.CancelAllSchedules(getBaseContext());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        // Releases Google In App Billing references
-        if (mHelper != null) mHelper.dispose();
-        mHelper = null;
-    }
-
-
-
 }

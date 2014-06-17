@@ -14,21 +14,29 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class SoundPackage {
+    public String SKU = null;
     public Bitmap image = null;
     public String path = null;
     public Properties props = new Properties();
     public BiMap<String,String> files = HashBiMap.create();
 
-    private String getTag(String file){
-        String tag = file.replace(path+"/", "");
-        tag = tag.substring(0, tag.length() - 4);
-        return tag;
+    public boolean owned = false;
+
+    private String getFilename(String file){
+        String name = file.replace(path+"/", "");
+        name = name.substring(0, name.length() - 4);
+        return name;
     }
 
     public SoundPackage(Context context, String packagePath){
         AssetManager am = context.getAssets();
         path = packagePath;
-        ArrayList<String> fileList = AssetsAdapter.getAssetsList(context, path);
+        SKU = packagePath.replace(AssetsHelper.pkg_path+"/","");
+
+        // make basic package owned by default
+        if (SKU.equals("pkg_basic")) owned = true;
+
+        ArrayList<String> fileList = AssetsHelper.getAssetsList(context, path);
         try {
             image = BitmapFactory.decodeStream(am.open(path + "/header.png"));
         } catch (IOException e) {
@@ -38,14 +46,12 @@ public class SoundPackage {
             props.loadFromXML(am.open(path + "/properties.xml"));
 
             for (String file : fileList){
-                files.put(file, props.getProperty(getTag(file), file));
+                files.put(file, props.getProperty(getFilename(file), file));
             }
 
 
         } catch (IOException e) {
             Log.e("ERROR","Package missing properties: " + path);
         }
-
-
     }
 }

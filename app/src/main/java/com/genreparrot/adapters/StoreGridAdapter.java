@@ -1,8 +1,6 @@
 package com.genreparrot.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,58 +12,53 @@ import com.genreparrot.app.R;
 
 import java.util.ArrayList;
 
-public class StoreGridAdapter extends ArrayAdapter<String> {
+public class StoreGridAdapter extends ArrayAdapter<SoundPackage> {
 
     private Context mContext;
-    private ArrayList<String> values = new ArrayList<String>();
-    private static ArrayList<SoundPackage> packages = new ArrayList<SoundPackage>();
+    public ArrayList<SoundPackage> packages;
 
-
-    public StoreGridAdapter(Context c, ArrayList<String> values) {
+    public StoreGridAdapter(Context c, ArrayList<SoundPackage> values) {
         super(c, R.layout.grid_single_package_layout, values);
         mContext = c;
-        this.values = values;
-
-        for (String file : values) {
-            packages.add(new SoundPackage(mContext, file));
-        }
+        packages = values;
     }
 
-
-    public void purchasePackageDialog(final int position){
-        final ArrayAdapter<String> ad;
-        final ArrayList<String> arr;
-
-        // get only the aliases of files
-        arr = new ArrayList<String>(packages.get(position).files.values());
-
-        ad = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_single_choice, arr);
-
-        final SoundPackage sp = packages.get(position);
-
-        new AlertDialog.Builder(getContext())
-                .setTitle(packages.get(position).props.getProperty("caption"))
-                .setSingleChoiceItems(ad, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SoundBatchPlayer.getInstance().playSingleFile(getContext(),
-                                sp.files.inverse().get(arr.get(i)));
-                    }
-                })
-                .setNegativeButton(R.string.btn_Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setPositiveButton(R.string.btn_Purchase, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setCancelable(true)
-                .show();
-    }
+//
+//    public void purchasePackageDialog(final int position){
+//        final ArrayAdapter<String> ad;
+//        final ArrayList<String> arr;
+//
+//        // get only the aliases of files
+//        arr = new ArrayList<String>(packages.get(position).files.values());
+//
+//        ad = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_single_choice, arr);
+//
+//        final SoundPackage sp = packages.get(position);
+//
+//
+//        new AlertDialog.Builder(getContext())
+//                .setTitle(packages.get(position).props.getProperty("caption"))
+//                .setSingleChoiceItems(ad, -1, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        SoundBatchPlayer.getInstance().playSingleFile(getContext(),
+//                                sp.files.inverse().get(arr.get(i)));
+//                    }
+//                })
+//                .setNegativeButton(R.string.btn_Cancel, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                })
+//                .setPositiveButton(R.string.btn_Purchase, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                    }
+//                })
+//                .setCancelable(true)
+//                .show();
+//    }
 
 
 
@@ -79,15 +72,15 @@ public class StoreGridAdapter extends ArrayAdapter<String> {
         ImageView imgAv = (ImageView) rowView.findViewById(R.id.imgAvailable);
 
         SoundPackage sp = packages.get(position);
+        if (sp != null) {
+            // check if a package is missing a header image
+            if (sp.image != null) img.setImageBitmap(sp.image);
 
-        // check if a package is missing a header image
-        if (sp.image != null) img.setImageBitmap(sp.image);
+            caption.setText(sp.props.getProperty("caption", "null"));
 
-        caption.setText(sp.props.getProperty("caption","null"));
-
-        // TODO set the OK image if the item is bought
-        imgAv.setImageResource(R.drawable.available);
-
+            if (sp.owned)
+                imgAv.setImageResource(R.drawable.available);
+        }
         return rowView;
     }
 }

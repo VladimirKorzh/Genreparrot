@@ -11,6 +11,9 @@ import com.genreparrot.fragments.ScheduleFragment;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
     private Context context;
 
+    Fragment media = new MediaFragment();
+    Fragment schedule = new ScheduleFragment();
+
     public TabsPagerAdapter(FragmentManager fm, Context _context) {
         super(fm);
         this.context = _context;
@@ -21,9 +24,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
         switch (index) {
             case 0:
-                return new ScheduleFragment();
+                return media;
             case 1:
-                return new MediaFragment();
+                return schedule;
         }
         return null;
     }

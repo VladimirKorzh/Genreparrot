@@ -8,13 +8,15 @@
     android:layout_weight="0.9"
     android:longClickable="true"
     android:id="@+id/lstScheduleItem"
+    android:clickable="false"
     style="@style/myBox">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:clickable="false">
 
         <ImageView
             android:layout_width="wrap_content"

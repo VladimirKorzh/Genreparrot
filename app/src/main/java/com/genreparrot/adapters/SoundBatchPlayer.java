@@ -3,7 +3,6 @@ package com.genreparrot.adapters;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.util.Log;
 
 import java.util.Stack;
@@ -49,8 +48,8 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
             lastContext = context;
 
             mp.setVolume(1f, 1f);
-            if (filename.contains("content://")) {
-                mp.setDataSource(context, Uri.parse(filename));
+            if (filename.contains("storage/")) {
+                mp.setDataSource(filename);
             }
             else {
                 AssetFileDescriptor afd = lastContext.getAssets().openFd(filename);

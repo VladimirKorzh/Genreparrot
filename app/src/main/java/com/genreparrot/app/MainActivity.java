@@ -229,7 +229,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             mHelper.dispose();
             mHelper = null;
         }
-        l = null;
+        l.loading.dismiss();
     }
 
 

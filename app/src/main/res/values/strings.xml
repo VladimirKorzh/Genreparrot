@@ -15,6 +15,7 @@
     <string name="RepsIntervalDialog">Reps interval (seconds)</string>
     <string name="AttractorSoundDialog">Play attractor sound (times)</string>
     <string name="SessionIntervalDialog">Interval between sessions (min)</string>
+    <string name="lblVolume">Volume</string>
 
     <!--Action buttons in User interface-->
     <string name="AddNewSchedule">Add new</string>
@@ -53,5 +54,6 @@
     <string name="msgErrBillingSetup">Problem setting up in-app billing: </string>
     <string name="msgErrFailedQueryInventory">Failed to query store inventory</string>
     <string name="msgErrOwnedQueryFailed">Failed to query owned items</string>
+
 
 </resources>

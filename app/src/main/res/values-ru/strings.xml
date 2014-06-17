@@ -5,8 +5,8 @@
     <!--Creation and editing of schedule-->
     <string name="title_activity_create_edit_alarm">Настройки расписания</string>
     <string name="SelectTrainingSoundDialogTitle">Выбор фразы</string>
-    <string name="lblTrainingSound">Выбор фразы</string>
-    <string name="lblNotSelected">Не выбрана</string>
+    <string name="lblTrainingSound">Фраза для обучения</string>
+    <string name="lblNotSelected">Не указано</string>
     <string name="btn_display_extra_settings">Дополнительные параметры</string>
     <string name="btn_hide_extra_settings">Скрыть параметры</string>
     <string name="StartTime">Время начала</string>
@@ -14,7 +14,8 @@
     <string name="RepsPerSessionDialog">Кол-во повторений за сессию</string>
     <string name="RepsIntervalDialog">Интервал повторений (сек)</string>
     <string name="AttractorSoundDialog">Кол-во звучаний привлекатора</string>
-    <string name="SessionIntervalDialog">Минут между сессиями </string>
+    <string name="SessionIntervalDialog">Интервал между сессиями (мин)</string>
+    <string name="lblVolume">Громкость</string>
 
     <!--Action buttons in User interface-->
     <string name="AddNewSchedule">Добавить</string>

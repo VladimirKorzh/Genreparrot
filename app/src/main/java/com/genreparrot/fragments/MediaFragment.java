@@ -151,7 +151,9 @@ public class MediaFragment extends Fragment
                 Log.d(TAG, "Error purchasing. Authenticity verification failed.");
                 return;
             }
-
+            String purchased_package = purchase.getSku();
+            AssetsHelper.getInstance().packages_loaded.get(purchased_package).owned = true;
+            getList();
             Log.d(TAG, "Purchase successful.");
         }
     };

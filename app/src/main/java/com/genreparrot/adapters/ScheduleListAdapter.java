@@ -130,7 +130,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
 
 
                 if (overlap){
-                    Toast.makeText(getContext(), "Schedules overlap. Sorry", 1000).show();
+                    Toast.makeText(getContext(), context.getString(R.string.msgErrScheduleOverlap), 1000).show();
                     sw.toggle();
                     return;
                 }
@@ -153,8 +153,4 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
         sw.setOnClickListener(listener);
         return rowView;
     }
-
-
-
-
 }

@@ -234,7 +234,7 @@ public class CreateEditSchedule extends ActionBarActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    //Height=0, but it set visibility to GONE
+                    //Height=0, but it sets visibility to GONE
                     extraSettings.setVisibility(View.GONE);
                 }
 

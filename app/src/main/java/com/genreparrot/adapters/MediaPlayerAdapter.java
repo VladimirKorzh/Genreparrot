@@ -25,7 +25,6 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
     public static final long REPEAT_EVERYDAY_BROADCAST_ID=9999;
 
     private static MediaPlayerAdapter instance = null;
-	private MediaPlayer mp = null;
     public static List<Long> list = new ArrayList<Long>();
 
     private static String fAttention = "attactor/chik.wav";

@@ -22,7 +22,6 @@ public class AssetsHelper {
 
     public AssetsHelper(Context c){
         this.context = c;
-
         instance = this;
     }
 
@@ -65,7 +64,6 @@ public class AssetsHelper {
     public String getRealPathFromURI(Uri contentUri)
     {
         String[] proj = { MediaStore.Audio.Media.DATA };
-        //Cursor cursor = managedQuery(contentUri, proj, null, null, null);
         Cursor cursor =  context.getContentResolver().query(contentUri, proj, null, null, null); //Since manageQuery is deprecated
         int column_index = 0;
         String res = "";

@@ -38,13 +38,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     LoadingDialog l;
     AssetsHelper a;
 
-
-
     // The helper object
     public IabHelper mHelper;
 
-    // In-app purchases codes
-    static final String SKU_PROSTOKVASHINO_1 = "pkg_prostokvashino1";
 
     public IabHelper getIabHelper(){
         return mHelper;
@@ -70,7 +66,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    alert("Problem setting up in-app billing: " + result);
+                    alert(getString(R.string.msgErrBillingSetup) + result);
                     l.loading.hide();
                     return;
                 }
@@ -80,7 +76,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
                 Log.d(TAG, "Setup successful.");
-                l.changeMsg("Fetching available packages list...");
+                l.changeMsg(getString(R.string.msgFetchingAvailablePackages));
                 mHelper.queryInventoryAsync(false, AssetsHelper.getInstance().packages_found, queryAvailablePackagesListener);
 
             }
@@ -98,7 +94,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             // Is it a failure?
             if (result.isFailure()) {
-                alert("Failed to query store inventory inventory");
+                alert(getString(R.string.msgErrFailedQueryInventory));
                 l.loading.hide();
                 return;
             }
@@ -107,7 +103,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
 
             Log.d(TAG, "Now initiating owned items query");
-            l.changeMsg("Getting a list of owned products");
+            l.changeMsg(getString(R.string.msgGettingListOfOwnedProducts));
             mHelper.queryInventoryAsync(queryOwnedPackagesListener);
         }
     };
@@ -118,7 +114,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                              Inventory inventory) {
 
             if (result.isFailure()) {
-                alert("Failed to query owned items");
+                alert(getString(R.string.msgErrOwnedQueryFailed));
                 l.loading.hide();
                 return;
             }
@@ -142,7 +138,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         protected String doInBackground(String... params) {
-            publishProgress("Loading sound packages...");
+            publishProgress(getString(R.string.msgLoadingPackages));
             a = new AssetsHelper(getApplication());
 
 
@@ -152,18 +148,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // Load all the packages that are found
             for (String pkg : a.packages_found){
                 SoundPackage sp = new SoundPackage(getApplication(), AssetsHelper.getPkg_path(pkg));
-                publishProgress("Sound package loaded: "+ sp.props.getProperty("caption"));
+                publishProgress(getString(R.string.msgJustLoadedPackage)+ sp.props.getProperty("caption"));
                 a.packages_loaded.put(pkg, sp);
                 Log.d(TAG, "Package loaded: "+ pkg);
             }
 
-
             // Load google In-App Store library and connect
-            publishProgress("Initiating app-store...");
+            publishProgress(getString(R.string.msgInitiatingAppStore));
             initiateAppStore();
-
-
-
 
             return "Success";
         }
@@ -303,37 +295,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         bld.create().show();
     }
 
-
-    // Enables or disables the "please wait" screen.
-/*    public void setWaitScreen(boolean set) {
-        findViewById(R.id.gridStore).setVisibility(set ? View.GONE : View.VISIBLE);
-        findViewById(R.id.imgWait).setVisibility(set ? View.VISIBLE : View.GONE);
-    }*/
-/*
-static final String ACTIVE_TAB = "activeTab";
-@Override
-public void onSaveInstanceState(Bundle savedInstanceState) {
-// Save the user's current game state
-savedInstanceState.putInt(ACTIVE_TAB, viewPager.getCurrentItem());
-
-// Always call the superclass so it can save the view hierarchy state
-super.onSaveInstanceState(savedInstanceState);
-}
-
-@Override
-public void onRestoreInstanceState(Bundle savedInstanceState) {
-// Always call the superclass so it can restore the view hierarchy
-super.onRestoreInstanceState(savedInstanceState);
-
-// Restore state members from saved instance
-actionBar.setSelectedNavigationItem(savedInstanceState.getInt(ACTIVE_TAB));
-viewPager.setCurrentItem(savedInstanceState.getInt(ACTIVE_TAB));
-}
-*/
-
-
-
-
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
     }
@@ -351,8 +312,8 @@ viewPager.setCurrentItem(savedInstanceState.getInt(ACTIVE_TAB));
     public void btnCreateNewScheduleClick(View v){
         Intent intent = new Intent(this, CreateEditSchedule.class);
         Bundle b = new Bundle();
-        b.putInt("scheduleID", -1); //Your id
-        intent.putExtras(b); //Put your id to your next Intent
+        b.putInt("scheduleID", -1);
+        intent.putExtras(b);
         startActivity(intent);
         overridePendingTransition( R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }

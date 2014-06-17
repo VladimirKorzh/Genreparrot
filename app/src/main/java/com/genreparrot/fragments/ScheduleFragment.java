@@ -25,7 +25,6 @@ import java.util.List;
 public class ScheduleFragment extends Fragment
 {
     public ScheduleListAdapter ad;
-    private List<Schedule> lstSch;
     private View root;
 
     public ScheduleFragment(){

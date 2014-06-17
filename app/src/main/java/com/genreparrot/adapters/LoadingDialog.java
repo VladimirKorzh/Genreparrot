@@ -3,6 +3,8 @@ package com.genreparrot.adapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.genreparrot.app.R;
+
 /**
  * Created by vladimir on 6/17/2014.
  */
@@ -12,7 +14,7 @@ public class LoadingDialog {
     private Context context;
     public LoadingDialog(Context c) {
         loading = new ProgressDialog(c);
-        loading.setTitle("Loading...");
+        loading.setTitle(c.getString(R.string.loadingDialogTitle));
         loading.setCancelable(false);
         loading.setInverseBackgroundForced(false);
         context = c;

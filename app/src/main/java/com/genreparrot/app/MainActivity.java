@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
                     alert(getString(R.string.msgErrBillingSetup) + result);
-                    l.loading.hide();
+                    LoadingDialog.loading.hide();
                     return;
                 }
 
@@ -95,7 +95,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // Is it a failure?
             if (result.isFailure()) {
                 alert(getString(R.string.msgErrFailedQueryInventory));
-                l.loading.hide();
+                LoadingDialog.loading.hide();
                 return;
             }
             else {
@@ -115,8 +115,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             if (result.isFailure()) {
                 alert(getString(R.string.msgErrOwnedQueryFailed));
-                l.loading.hide();
-                return;
+                LoadingDialog.loading.hide();
             }
             else {
                 Log.d(TAG, "Owned items query successful.");
@@ -126,7 +125,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         Log.d(TAG, "User owns: "+sku);
                     }
                 }
-                l.loading.hide();
+                LoadingDialog.loading.hide();
             }
         }
     };
@@ -143,7 +142,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 
             // Get the list of packages in the current distribution
-            a.packages_found = a.getSoundPackagesNames(getApplication());
+            a.packages_found = AssetsHelper.getSoundPackagesNames(getApplication());
 
             // Load all the packages that are found
             for (String pkg : a.packages_found){
@@ -235,16 +234,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 
     public void setupUI(){
-        // Disable unnecessary elements
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setDisplayShowHomeEnabled(false);
-
         // Set default volume control buttons reaction
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
+
         actionBar = getActionBar();
+        // Disable unnecessary elements
+        assert actionBar != null;
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
 
         // Create tabs adapter that will handle our fragments
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), this);

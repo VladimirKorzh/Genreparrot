@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Разговорный жанр для попугаев</string>
+
+    <!--Creation and editing of schedule-->
+    <string name="title_activity_create_edit_alarm">Настройки расписания</string>
+    <string name="SelectTrainingSoundDialogTitle">Выбор фразы</string>
+    <string name="lblTrainingSound">Выбор фразы</string>
+    <string name="lblNotSelected">Не выбрана</string>
+    <string name="btn_display_extra_settings">Дополнительные параметры</string>
+    <string name="btn_hide_extra_settings">Скрыть параметры</string>
+    <string name="StartTime">Время начала</string>
+    <string name="EndTime">Время окончания</string>
+    <string name="RepsPerSessionDialog">Кол-во повторений за сессию</string>
+    <string name="RepsIntervalDialog">Интервал повторений (сек)</string>
+    <string name="AttractorSoundDialog">Кол-во звучаний привлекатора</string>
+    <string name="SessionIntervalDialog">Интервал между сессиями (мин)</string>
+
+    <!--Action buttons in User interface-->
+    <string name="AddNewSchedule">Добавить</string>
+    <string name="schdule_edit_string">Редактировать</string>
+    <string name="schdule_delete_string">Удалить</string>
+    <string name="action_save_schedule">Сохранить</string>
+    <string name="action_cancel_schedule">Отмена</string>
+    <string name="btnSelect">Выбрать</string>
+    <string name="btnRecording">Записать</string>
+    <string name="btn_Purchase">Купить все</string>
+    <string name="btn_Back">Назад</string>
+    <string name="btn_ThankYou">Спасибо за покупку</string>
+
+    <!--Messages displayed as Toasts-->
+    <string name="ScheduleErrorMsgFile">Ошибка: Фраза не выбрана</string>
+    <string name="ScheduleErrorMsgTime">Ошибка: Временной диапазон не указан</string>
+    <string name="ScheduleErrorMsgTimeWrong">Ошибка: Время указано не верно</string>
+    <string name="msgErrScheduleOverlap">Ошибка: Время расписаний совпадает</string>
+    <string name="ScheduleUpdatedErrorMsg">Ошибка обновления расписания. Попробуйте снова.</string>
+    <string name="ScheduleUpdatedMsg">Расписание обновлено</string>
+    <string name="ScheduleCreatedMsg">Новое расписание создано успешно</string>
+
+    <!--Tabs on top-->
+    <string name="LibraryTab">Библиотека</string>
+    <string name="ScheduleTab">График</string>
+
+    <!--Messages displayed during startup-->
+    <string name="loadingDialogTitle">Загрузка...</string>
+    <string name="msgLoadingPackages">Загружаем сборники звуков...</string>
+    <string name="msgJustLoadedPackage">Сборник загружен: </string>
+    <string name="msgInitiatingAppStore">Инициализация магазина...</string>
+    <string name="msgFetchingAvailablePackages">Получение информации о доступных сборниках...</string>
+    <string name="msgGettingListOfOwnedProducts">Получение списка купленых сборников...</string>
+
+    <!--error messages for billing-->
+    <string name="msgErrBillingSetup">Ошибка при активации магазина</string>
+    <string name="msgErrFailedQueryInventory">Ошибка при получении доступных сборников</string>
+    <string name="msgErrOwnedQueryFailed">Ошибка при получении списка купленных товаров</string>
+
+</resources>

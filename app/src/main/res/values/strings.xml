@@ -3,9 +3,9 @@
     <string name="app_name">Spoken genre for parrots</string>
 
     <!--Creation and editing of schedule-->
-    <string name="title_activity_create_edit_alarm">Schedule Details</string>
-    <string name="SelectTrainingSoundDialogTitle">Select Training Sound</string>
-    <string name="lblTrainingSound">Training Sound</string>
+    <string name="title_activity_create_edit_alarm">Schedule details</string>
+    <string name="SelectTrainingSoundDialogTitle">Select training phrase</string>
+    <string name="lblTrainingSound">Training phrase</string>
     <string name="lblNotSelected">Not Selected</string>
     <string name="btn_display_extra_settings">Display Extra Settings</string>
     <string name="btn_hide_extra_settings">Hide Extra Settings</string>
@@ -29,25 +29,29 @@
     <string name="btn_ThankYou">Thank you for purchasing</string>
 
     <!--Messages displayed as Toasts-->
-    <string name="ScheduleErrorMsgFile">Training file not selected</string>
-    <string name="ScheduleErrorMsgTime">Schedule times not specified</string>
-    <string name="ScheduleErrorMsgTimeWrong">Schedule End time is before Start time</string>
-    <string name="ScheduleUpdatedErrorMsg">Error occured while updating schedule</string>
+    <string name="ScheduleErrorMsgFile">Error: Training phrase not selected</string>
+    <string name="ScheduleErrorMsgTime">Error: Schedule times not specified</string>
+    <string name="ScheduleErrorMsgTimeWrong">Error: Invalid time period</string>
+    <string name="msgErrScheduleOverlap">Error: Overlapping schedules not allowed</string>
+    <string name="ScheduleUpdatedErrorMsg">Error occurred while updating schedule</string>
     <string name="ScheduleUpdatedMsg">Schedule has been updated</string>
     <string name="ScheduleCreatedMsg">New schedule has been created</string>
 
     <!--Tabs on top-->
     <string name="LibraryTab">Library</string>
     <string name="ScheduleTab">Schedule</string>
+
+    <!--Messages displayed during startup-->
     <string name="loadingDialogTitle">Loading...</string>
-    <string name="msgErrScheduleOverlap">Schedules overlap. Sorry</string>
-    <string name="msgErrBillingSetup">Problem setting up in-app billing: </string>
-    <string name="msgFetchingAvailablePackages">Fetching available packages list...</string>
-    <string name="msgErrFailedQueryInventory">Failed to query store inventory inventory</string>
-    <string name="msgGettingListOfOwnedProducts">Getting a list of owned products</string>
-    <string name="msgErrOwnedQueryFailed">Failed to query owned items</string>
     <string name="msgLoadingPackages">Loading sound packages...</string>
     <string name="msgJustLoadedPackage">Sound package loaded: </string>
     <string name="msgInitiatingAppStore">Initiating app-store...</string>
+    <string name="msgFetchingAvailablePackages">Fetching available packages list...</string>
+    <string name="msgGettingListOfOwnedProducts">Getting a list of owned products...</string>
+
+    <!--error messages for billing-->
+    <string name="msgErrBillingSetup">Problem setting up in-app billing: </string>
+    <string name="msgErrFailedQueryInventory">Failed to query store inventory</string>
+    <string name="msgErrOwnedQueryFailed">Failed to query owned items</string>
 
 </resources>

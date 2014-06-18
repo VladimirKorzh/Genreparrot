@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Базовый набор</entry>
+
+    <entry key="lapuh">Дуб, как слышно меня? Лопух не догадался?</entry>
+    <entry key="oper_y">Операция Ы</entry>
+    <entry key="ponia_slysho">Понял, понял. Слышу тебя нормально</entry>
+    <entry key="romantika">Романтика</entry>
+    <entry key="sinhrofazotron">Принцип работы синхрофазатрона</entry>
+
+</properties>

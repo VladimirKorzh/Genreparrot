@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Портал</entry>
+
+    <entry key="a_eto_chto">А это что?</entry>
+    <entry key="a_tebe_vse_ravno">А тебе все-равно</entry>
+    <entry key="budem_skuchat">Будем скучать</entry>
+    <entry key="chto_eto_shumit">Что это шумит?</entry>
+    <entry key="chto_ti_delaew">Что ты делаешь?</entry>
+
+    <entry key="ciferki">На этом чем-то циферки</entry>
+    <entry key="mne_nadoelo">Мне надоело</entry>
+    <entry key="nichego_ne_trogay">Ничего не трогай</entry>
+    <entry key="razgovor_okonchen">Разговор окончен</entry>
+    <entry key="sobludayte_ostorozhnost">Соблюдайте осторожность</entry>
+
+    <entry key="ti_chto_izdevaewsa">Ты что издеваешься</entry>
+    <entry key="ti_ewe_priydew">Ты еще прийдешь?</entry>
+    <entry key="ti_menja_sluwaew">Ты меня слушаешь?</entry>
+
+</properties>

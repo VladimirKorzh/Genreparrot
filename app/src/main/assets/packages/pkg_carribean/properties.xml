@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Пираты карибского моря</entry>
+
+<entry key="begaut_kamni">За нами бегают камни</entry>
+<entry key="moy_korabl">Перестаньте дырявить мой корабль</entry>
+<entry key="ne_dla_tebja_pulja">Не для тебя эта пуля</entry>
+<entry key="ostrov_privedeniy">Остров приведений</entry>
+<entry key="otkuda_etouvas">Откуда это у Вас?</entry>
+
+</properties>

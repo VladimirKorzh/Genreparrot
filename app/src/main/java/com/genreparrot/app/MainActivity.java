@@ -1,16 +1,15 @@
 package com.genreparrot.app;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -19,21 +18,22 @@ import com.genreparrot.adapters.LoadingDialog;
 import com.genreparrot.adapters.MediaPlayerAdapter;
 import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.adapters.TabsPagerAdapter;
+import com.genreparrot.fragments.MediaFragment;
 import com.genreparrot.fragments.ScheduleFragment;
 
 import util.IabHelper;
 import util.IabResult;
 import util.Inventory;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
-
-    // TAG is used in debug output
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     static final String TAG = "MainActivity";
+
+    static final boolean EMULATOR_BUILD = true;
 
     // Global references to action bar and viewPager
     private ViewPager viewPager;
-    private ActionBar actionBar;
-    public TabsPagerAdapter mAdapter;
+    private android.support.v7.app.ActionBar actionBar;
+    public TabsPagerAdapter tabsPagerAdapter;
 
     LoadingDialog l;
     AssetsHelper a;
@@ -47,6 +47,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public void initiateAppStore() {
+
         // Applications public key
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiZ9RhHkwfm9K851Q86pWuWfdBoorVQkI+DCdSquJB6uMt+FzeDgD3fdCzjAvzRzP9NW9zlVgoh7CZhzgv+9EYaRHfaOkX1dBRBvGOyo3wu6q1r56s9yLoDLT2GeAJuHXVFtOQqsPOK0ME8Af5UWtYhf3YIkBLmOX4eFDCGuwTKNRJ5IarAwDVs+ZPhgZeDyTBGF+xEStqYg/htQKbYh924LRYmMRmIOVt9Jw/j5nPKqGVFpS7qD/fZOzl3FeD+wp0D7XBC/zsBR/ex9CxaWrtJ/xMb9ktQyP1cc7Pzob7TnjVa/ggKSJsOdjXsCwe4gbssJ/Pr4TM2pWp+eMO33RDwIDAQAB";
 
@@ -126,11 +127,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                 }
                 LoadingDialog.loading.hide();
+                // reload the list using latest values
+                ((MediaFragment) tabsPagerAdapter.getItem(0)).getList();
             }
         }
     };
 
+    @Override
+    public void onTabSelected(Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
 
+    @Override
+    public void onTabUnselected(Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
+
+    }
 
 
     private class LoadApplicationFlow extends AsyncTask<String, String, String> {
@@ -154,7 +170,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             // Load google In-App Store library and connect
             publishProgress(getString(R.string.msgInitiatingAppStore));
-            initiateAppStore();
+            if (!EMULATOR_BUILD) { initiateAppStore(); }
 
             return "Success";
         }
@@ -173,7 +189,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
             else {
                 Log.d(TAG,"Alarm wasn't set. Setting it now.");
-                ((ScheduleFragment) mAdapter.getItem(1)).ad.actionStartTraining();
+                ((ScheduleFragment) tabsPagerAdapter.getItem(1)).ad.actionStartTraining();
             }
         }
 
@@ -234,13 +250,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 
     public void setupUI(){
+        if (EMULATOR_BUILD) LoadingDialog.loading.hide();
         // Set default volume control buttons reaction
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
 
-        actionBar = getActionBar();
+        actionBar = getSupportActionBar();
         // Disable unnecessary elements
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
@@ -248,10 +265,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 
         // Create tabs adapter that will handle our fragments
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), this);
+        tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(), this);
 
         // set everything up
-        viewPager.setAdapter(mAdapter);
+        viewPager.setAdapter(tabsPagerAdapter);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set the amount of pages to hold in memory
@@ -296,18 +313,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         bld.create().show();
     }
 
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    }
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-    }
 
 
     public void btnCreateNewScheduleClick(View v){

@@ -36,7 +36,9 @@ public class ScheduleFragment extends Fragment
 
         List<Schedule> lstSch = SchDao.getAllSchedules();
         ad.clear();
-        ad.addAll(lstSch);
+        for (Schedule s : lstSch){
+            ad.add(s);
+        }
         ad.notifyDataSetChanged();
     }
 

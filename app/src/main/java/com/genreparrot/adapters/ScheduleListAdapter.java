@@ -20,7 +20,6 @@ import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
     private final Context context;
@@ -34,6 +33,9 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
 
 
     public void actionStartTraining(){
+
+        final long ONE_DAY_IN_MILLIS = 86400000;
+
         // get the alarm manager reference
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -49,7 +51,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
 
         // set the alarm to be repeated every day at 0:0:1
         PendingIntent pi = PendingIntent.getBroadcast(context, (int) MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, t.toMillis(true), TimeUnit.DAYS.toMillis(1), pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, t.toMillis(true), ONE_DAY_IN_MILLIS, pi);
         //MediaPlayerAdapter.list.add(MediaPlayerAdapter.REPEAT_EVERYDAY_BROADCAST_ID);
         //Toast.makeText(context, "Schedule changed successfully", Toast.LENGTH_LONG).show();
     }
@@ -64,7 +66,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
         TextView endtime   = (TextView) rowView.findViewById(R.id.txtEndTime);
         TextView filename  = (TextView) rowView.findViewById(R.id.txtFilename);
         TextView txtPos    = (TextView) rowView.findViewById(R.id.txtPos);
-        Switch   sw        = (Switch)   rowView.findViewById(R.id.switchOnOff);
+        org.jraf.android.backport.switchwidget.Switch sw = (org.jraf.android.backport.switchwidget.Switch) rowView.findViewById(R.id.switchOnOff);
 
         starttime.setText(String.valueOf(Schedule.timeMillisToString(values.get(position).getStarttime())));
         endtime.setText(String.valueOf(Schedule.timeMillisToString(values.get(position).getEndtime())));
@@ -115,16 +117,16 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
                 }
 
                 LinearLayout layout = null;
-                Switch sw = null;
+                org.jraf.android.backport.switchwidget.Switch sw = null;
                 switch (view.getId()){
                     case R.id.lstScheduleItem:
                         layout = (LinearLayout) view;
-                        sw = (Switch) view.findViewById(R.id.switchOnOff);
+                        sw = (org.jraf.android.backport.switchwidget.Switch) view.findViewById(R.id.switchOnOff);
                         sw.toggle();
                         break;
                     case R.id.switchOnOff:
                         layout = (LinearLayout) view.getParent();
-                        sw = (Switch) view;
+                        sw = (org.jraf.android.backport.switchwidget.Switch) view;
                         break;
                 }
 

@@ -40,7 +40,9 @@ public class MediaFragment extends Fragment
 
     public void getList(){
         ad.clear();
-        ad.addAll(AssetsHelper.getInstance().packages_loaded.values());
+        for (SoundPackage sp : AssetsHelper.getInstance().packages_loaded.values()){
+            ad.add(sp);
+        }
         ad.notifyDataSetChanged();
     }
 

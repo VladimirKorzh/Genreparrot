@@ -101,8 +101,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Volume"
-                                android:id="@+id/lblVolume" />
+                                android:text="@+string/lblVolume"
+                                android:id="@+id/lblVolume"
+                                android:singleLine="true" />
 
                             <LinearLayout
                                 android:orientation="horizontal"

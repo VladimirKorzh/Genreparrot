@@ -224,8 +224,7 @@ public class CreateEditSchedule extends ActionBarActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
+                .setCancelable(true)
                 .show();
     }
 

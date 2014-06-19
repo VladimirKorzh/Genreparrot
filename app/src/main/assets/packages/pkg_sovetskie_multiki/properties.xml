@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Советские мультфильмы</entry>
+
+    <entry key="bezobrazie">Безобразие</entry>
+    <entry key="chego_sporite">Чего вы спорите?</entry>
+    <entry key="bitmordu">Когда будем бить морду?</entry>
+    <entry key="drug">Чебурашка, ты настоящий друг</entry>
+    <entry key="horoshiy_malchik">Хороший мальчик</entry>
+    <entry key="zdravstvuyte">Здравствуй чебурашечка</entry>
+
+</properties>

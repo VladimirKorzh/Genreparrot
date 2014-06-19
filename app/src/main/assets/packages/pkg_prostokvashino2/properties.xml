@@ -3,9 +3,9 @@
 <properties>
 <entry key="caption">Простоквашино 2</entry>
 
-<entry key="chto_za_narodnoe_tvorchestvo">Это что за народное творчество?</entry>
-<entry key="delayte_chto_hotite">Делайте что хотите...</entry>
-<entry key="idemte_chai_pit">Идемте чай пить!</entry>
-<entry key="ptichku_ne_obizhat">Птичку не обижать</entry>
-<entry key="televizionnaja_peredacha">Наша квартира мне телевизионную передачу напоминает: "Что, где, когда"</entry>
+    <entry key="chto_za_narodnoe_tvorchestvo">Это что за народное творчество?</entry>
+    <entry key="delayte_chto_hotite">Делайте что хотите...</entry>
+    <entry key="idemte_chai_pit">Идемте чай пить!</entry>
+    <entry key="ptichku_ne_obizhat">Птичку не обижать</entry>
+    <entry key="televizionnaja_peredacha">Наша квартира мне телевизионную передачу напоминает: "Что, где, когда"</entry>
 </properties>

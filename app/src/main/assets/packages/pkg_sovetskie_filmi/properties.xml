@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="caption">Базовый набор</entry>
+
+    <entry key="led_tronulsa">Лед тронулся, Господа, лед тронулся.</entry>
+    <entry key="ochered">В очередь сукины дети, в очередь</entry>
+    <entry key="odin_za_vsex">Один за всех и все за одного</entry>
+    <entry key="oruzhie_na_pol">Оружие на пол, всем лежать мордой в пол.</entry>
+    <entry key="papiros">Дай папиросочку, у тебя брюки в полосочку.</entry>
+    <entry key="rodnoy">Иди ко мне родной.</entry>
+
+</properties>

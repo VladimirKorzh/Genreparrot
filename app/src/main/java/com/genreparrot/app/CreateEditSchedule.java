@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -325,6 +324,7 @@ public class CreateEditSchedule extends ActionBarActivity {
                         0
                 );
                 Toast.makeText(this, getString(R.string.ScheduleCreatedMsg), Toast.LENGTH_LONG).show();
+
             }
             SchDao.close();
             this.finish();

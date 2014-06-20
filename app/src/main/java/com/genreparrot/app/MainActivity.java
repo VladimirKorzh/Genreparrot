@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    alert(getString(R.string.msgErrBillingSetup) + result);
+                    AssetsHelper.myLog(TAG, getString(R.string.msgErrBillingSetup));
                     LoadingDialog.loading.hide();
                     return;
                 }
@@ -161,10 +161,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 SchDao.open();
 
                 SchDao.createSchedule(
-                        "filename=packages/pkg_basic/pora_podkrepitsa.mp3", //file
+                        "packages/pkg_basic/pora_podkrepitsa.mp3", //file
                         13, // volume
-                        Integer.parseInt("1403235038000"), // start
-                        Integer.parseInt("1403236838000"), // end
+                        Long.parseLong("1403235038000"), // start
+                        Long.parseLong("1403236838000"), // end
                         15, //repspersession
                         8, // repsinterval
                         5, //sessioninterval
@@ -173,10 +173,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 );
 
                 SchDao.createSchedule(
-                        "filename=packages/pkg_basic/svobodu_popugayam.mp3", //file
+                        "packages/pkg_basic/svobodu_popugayam.mp3", //file
                         11, // volume
-                        Integer.parseInt("1403247623000"), // start
-                        Integer.parseInt("1403253023000"), // end
+                        Long.parseLong("1403247623000"), // start
+                        Long.parseLong("1403253023000"), // end
                         15, //repspersession
                         8, // repsinterval
                         10, //sessioninterval
@@ -185,10 +185,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 );
 
                 SchDao.createSchedule(
-                        "filename=packages/pkg_basic/dumat_menwe_nado.mp3", //file
+                        "packages/pkg_basic/dumat_menwe_nado.mp3", //file
                         13, // volume
-                        Integer.parseInt("1403222423000"), // start
-                        Integer.parseInt("1403225123000"), // end
+                        Long.parseLong("1403265632000"), // start
+                        Long.parseLong("1403268332000"), // end
                         15, //repspersession
                         8, // repsinterval
                         5, //sessioninterval
@@ -197,10 +197,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 );
 
                 SchDao.createSchedule(
-                        "filename=packages/pkg_basic/sova_otkrivay.mp3", //file
+                        "packages/pkg_basic/sova_otkrivay.mp3", //file
                         13, // volume
-                        Integer.parseInt("1403272850000"), // start
-                        Integer.parseInt("1403280050000"), // end
+                        Long.parseLong("1403272850000"), // start
+                        Long.parseLong("1403280050000"), // end
                         15, //repspersession
                         8, // repsinterval
                         10, //sessioninterval
@@ -358,6 +358,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
+        ((MediaFragment) tabsPagerAdapter.getItem(0)).getList();
     }
 
 

@@ -51,7 +51,7 @@
     <string name="msgGettingListOfOwnedProducts">Getting a list of owned products...</string>
 
     <!--error messages for billing-->
-    <string name="msgErrBillingSetup">Problem setting up in-app billing: </string>
+    <string name="msgErrBillingSetup">Problem setting up in-app store.</string>
     <string name="msgErrFailedQueryInventory">Failed to query store inventory</string>
     <string name="msgErrOwnedQueryFailed">Failed to query owned items</string>
 

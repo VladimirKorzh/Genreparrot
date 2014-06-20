@@ -16,39 +16,23 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:clickable="false">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/ic_clock_dark"
-            android:scaleType="center"
-            android:contentDescription="icon" />
+        android:clickable="false"
+        android:weightSum="1">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Сова открывай"
-                android:id="@+id/txtFilename"
-                android:textColor="@android:color/background_dark"
-                android:layout_weight="1"
-                android:maxWidth="180dp"
-                android:singleLine="true" />
+            android:layout_gravity="center"
+            android:layout_weight="0.7">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:showDividers="middle|beginning|end"
-                android:layout_weight="1"
-                android:focusable="false">
+                android:focusable="false"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,39 +58,40 @@
                     android:id="@+id/txtEndTime"
                     android:layout_gravity="center" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"></LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <org.jraf.android.backport.switchwidget.Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switchOnOff"
+                    android:textOff=''
+                    android:textOn=''
+                    android:switchMinWidth="56dp"
+                    style="@style/AppTheme"
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Думать меньше надо, а соображать больше."
+                android:id="@+id/txtFilename"
+                android:textColor="@android:color/background_dark"
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/txtPos"
-                android:visibility="invisible" />
-        </LinearLayout>
+                android:visibility="gone" />
 
-        <org.jraf.android.backport.switchwidget.Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/switchOnOff"
-            android:layout_gravity="center"
-            android:textOff=''
-            android:textOn=''
-            android:switchMinWidth="56dp"
-            style="@style/AppTheme" />
+        </LinearLayout>
 
     </LinearLayout>
 

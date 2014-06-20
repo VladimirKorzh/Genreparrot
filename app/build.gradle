@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
-        versionCode 4
-        versionName "Good boy"
+        versionCode 5
+        versionName "Fixit Felix"
     }
 
     signingConfigs {

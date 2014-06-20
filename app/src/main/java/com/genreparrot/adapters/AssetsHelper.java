@@ -14,7 +14,7 @@ public class AssetsHelper {
     private static AssetsHelper instance = null;
 
     public static final boolean EMULATOR_BUILD = false;
-    public static final boolean ENABLE_DEBUG_LOG = true;
+    public static final boolean ENABLE_DEBUG_LOG = false;
 
 
     final static String pkg_path = "packages";

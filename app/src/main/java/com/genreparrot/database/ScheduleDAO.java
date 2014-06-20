@@ -21,8 +21,8 @@ public class ScheduleDAO {
                                     SqliteHelper.COLUMN_VOLUME,
                                     SqliteHelper.COLUMN_STARTTIME,
                                     SqliteHelper.COLUMN_ENDTIME,
-                                    SqliteHelper.COLUMN_REPSINTERVAL,
                                     SqliteHelper.COLUMN_REPSPERSESSION,
+                                    SqliteHelper.COLUMN_REPSINTERVAL,
                                     SqliteHelper.COLUMN_SESSIONINTERVAL,
                                     SqliteHelper.COLUMN_ATTRACTORTIMES,
                                     SqliteHelper.COLUMN_STATE};
@@ -41,7 +41,7 @@ public class ScheduleDAO {
 
 
     public boolean updateSchedule(int id, String filename, int volume, long starttime, long endtime,
-                                   int repsinterval, int repspersession, int sessioninterval, int attractortimes,
+                                    int repspersession, int repsinterval, int sessioninterval, int attractortimes,
                                    int state) {
         ContentValues values = new ContentValues();
 
@@ -69,7 +69,7 @@ public class ScheduleDAO {
 
 
     public Schedule createSchedule(String filename, int volume, long starttime, long endtime,
-                                   int repsinterval, int repspersession, int sessioninterval, int attractortimes,
+                                   int repspersession, int repsinterval, int sessioninterval, int attractortimes,
                                    int state) {
         ContentValues values = new ContentValues();
 
@@ -83,6 +83,7 @@ public class ScheduleDAO {
         values.put(SqliteHelper.COLUMN_ATTRACTORTIMES, attractortimes);
         values.put(SqliteHelper.COLUMN_STATE, state);
 
+        AssetsHelper.myLog("DATABASE", values.toString());
 
         long insertId = database.insert(SqliteHelper.TABLE_SCHEDULES, null, values);
 

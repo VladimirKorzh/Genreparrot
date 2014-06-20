@@ -41,9 +41,13 @@ public class SqliteHelper extends SQLiteOpenHelper {
             COLUMN_STATE + " integer " +
             ");";
 
+
+
+
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
+
     }
 
     @Override

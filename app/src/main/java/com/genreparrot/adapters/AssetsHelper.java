@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class AssetsHelper {
     private static AssetsHelper instance = null;
 
     public static final boolean EMULATOR_BUILD = false;
-    public static final boolean ENABLE_DEBUG_LOG = false;
+    public static final boolean ENABLE_DEBUG_LOG = true;
 
 
     final static String pkg_path = "packages";
@@ -40,7 +41,7 @@ public class AssetsHelper {
 
 
     public static void myLog(String tag, String msg){
-        if (ENABLE_DEBUG_LOG) AssetsHelper.myLog(tag,msg);
+        if (ENABLE_DEBUG_LOG) Log.d(tag, msg);
     }
 
 
@@ -52,8 +53,8 @@ public class AssetsHelper {
                 return sp.files.inverse().get(fileAlias);
             }
         }
-        AssetsHelper.myLog(TAG,"Input: "+ fileAlias);
-        AssetsHelper.myLog(TAG,"Error finding corresponding filepath. returning what we've got.");
+        AssetsHelper.myLog(TAG, "Input: " + fileAlias);
+        AssetsHelper.myLog(TAG, "Error finding corresponding filepath. returning what we've got.");
         return fileAlias;
     }
 
@@ -63,9 +64,9 @@ public class AssetsHelper {
                 return sp.files.get(filepath);
             }
         }
-        AssetsHelper.myLog(TAG,"Input: "+ filepath);
-        AssetsHelper.myLog(TAG,"Error finding corresponding alias. returning what we've got.");
-        AssetsHelper.myLog(TAG, "Probably: "+ getRealPathFromURI(Uri.parse(filepath)));
+        AssetsHelper.myLog(TAG, "Input: " + filepath);
+        AssetsHelper.myLog(TAG, "Error finding corresponding alias. returning what we've got.");
+        AssetsHelper.myLog(TAG, "Probably: " + getRealPathFromURI(Uri.parse(filepath)));
         return getRealPathFromURI(Uri.parse(filepath));
     }
 

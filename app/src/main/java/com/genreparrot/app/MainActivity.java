@@ -3,6 +3,7 @@ package com.genreparrot.app;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.genreparrot.adapters.LoadingDialog;
 import com.genreparrot.adapters.MediaPlayerAdapter;
 import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.adapters.TabsPagerAdapter;
+import com.genreparrot.database.ScheduleDAO;
 import com.genreparrot.fragments.MediaFragment;
 import com.genreparrot.fragments.ScheduleFragment;
 
@@ -150,6 +152,66 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         protected String doInBackground(String... params) {
+
+            SharedPreferences prefs = getSharedPreferences("com.genreparrot", MODE_PRIVATE);
+            if (prefs.getBoolean("firstrun", true)) {
+                prefs.edit().putBoolean("firstrun", false).commit();
+
+                ScheduleDAO SchDao = new ScheduleDAO(getApplicationContext());
+                SchDao.open();
+
+                SchDao.createSchedule(
+                        "filename=packages/pkg_basic/pora_podkrepitsa.mp3", //file
+                        13, // volume
+                        Integer.parseInt("1403235038000"), // start
+                        Integer.parseInt("1403236838000"), // end
+                        15, //repspersession
+                        8, // repsinterval
+                        5, //sessioninterval
+                        5, // attractortimes
+                        0 // state
+                );
+
+                SchDao.createSchedule(
+                        "filename=packages/pkg_basic/svobodu_popugayam.mp3", //file
+                        11, // volume
+                        Integer.parseInt("1403247623000"), // start
+                        Integer.parseInt("1403253023000"), // end
+                        15, //repspersession
+                        8, // repsinterval
+                        10, //sessioninterval
+                        3, // attractortimes
+                        0 // state
+                );
+
+                SchDao.createSchedule(
+                        "filename=packages/pkg_basic/dumat_menwe_nado.mp3", //file
+                        13, // volume
+                        Integer.parseInt("1403222423000"), // start
+                        Integer.parseInt("1403225123000"), // end
+                        15, //repspersession
+                        8, // repsinterval
+                        5, //sessioninterval
+                        3, // attractortimes
+                        0 // state
+                );
+
+                SchDao.createSchedule(
+                        "filename=packages/pkg_basic/sova_otkrivay.mp3", //file
+                        13, // volume
+                        Integer.parseInt("1403272850000"), // start
+                        Integer.parseInt("1403280050000"), // end
+                        15, //repspersession
+                        8, // repsinterval
+                        10, //sessioninterval
+                        4, // attractortimes
+                        0 // state
+                );
+
+                SchDao.close();
+            }
+
+
             publishProgress(getString(R.string.msgLoadingPackages));
             a = new AssetsHelper(getApplication());
 

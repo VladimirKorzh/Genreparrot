@@ -3,7 +3,6 @@ package com.genreparrot.adapters;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import java.util.Stack;
 
@@ -33,12 +32,12 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
     }
 
     public void clearPlaylist(){
-        Log.d("debug","Clear Playlist");
+        AssetsHelper.myLog("debug","Clear Playlist");
         if (!playlist.empty()) playlist.clear();
     }
 
     public void stopPlaying() {
-        Log.d("debug","Stop Playing");
+        AssetsHelper.myLog("debug","Stop Playing");
         mp.stop();
         mp.reset();
     }
@@ -57,15 +56,15 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
             }
             mp.prepare();
             mp.start();
-            Log.d("debug","Playing file: "+filename);
+            AssetsHelper.myLog("debug","Playing file: "+filename);
         } catch (Exception e) {
-            Log.d("ERROR", "FILE NOT FOUND: "+filename);
+            AssetsHelper.myLog("ERROR", "FILE NOT FOUND: "+filename);
         }
     }
 
     public void playPlaylist(Context context, Stack files) {
       lastContext = context;
-      Log.d("debug", "playing playlist");
+      AssetsHelper.myLog("debug", "playing playlist");
       playlist = files;
       playFile(lastContext, (String)files.pop());
     }

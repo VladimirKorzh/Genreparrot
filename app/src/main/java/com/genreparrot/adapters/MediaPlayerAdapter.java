@@ -37,12 +37,12 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
     }
 
     public static void debugTime(String name, Time t){
-        Log.d("debug", "Time: "+name+" "+t.hour+":"+t.minute+":"+t.second);
+        AssetsHelper.myLog("debug", "Time: "+name+" "+t.hour+":"+t.minute+":"+t.second);
     }
 
     public void Schedule(Context context, Schedule s){
 
-        Log.d("debug", "---- Schedule function ----"+s.getId());
+        AssetsHelper.myLog("debug", "---- Schedule function ----"+s.getId());
 
         // get the current system time information
         Time currentTime = new Time();
@@ -57,7 +57,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         Time start = Schedule.timeMillisToObject(s.getStarttime());
         Time end   = Schedule.timeMillisToObject(s.getEndtime());
         if (currentTime.after(start) && currentTime.before(end)) {
-            Log.d("debug", "-> Now is after start but before end. Scheduling to start right now.");
+            AssetsHelper.myLog("debug", "-> Now is after start but before end. Scheduling to start right now.");
 
             s.setStarttime(currentTime.toMillis(true));
             this.Schedule(context, s);
@@ -66,7 +66,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
 
         // Check if the alarm is already past its due time. In that case do not execute anything.
         if (currentTime.after(end)){
-            Log.d("debug", "-> Now is after end do not even bother.");
+            AssetsHelper.myLog("debug", "-> Now is after end do not even bother.");
             return;
         }
 
@@ -119,7 +119,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         }
 
 
-        Log.d("debug", "---- OnReceive ----"+s.getId());
+        AssetsHelper.myLog("debug", "---- OnReceive ----"+s.getId());
 
         // get the current system time information
         Time currentTime = new Time();
@@ -132,7 +132,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         //  Schedule time is up. Stop it from repeating.
         Time end   = Schedule.timeMillisToObject(s.getEndtime());
         if (currentTime.after(end)) {
-            Log.d("debug", "Schedule End Time Reached Cancelling schedule");
+            AssetsHelper.myLog("debug", "Schedule End Time Reached Cancelling schedule");
             CancelSchedule(context, s.getId());
             return;
         }
@@ -181,7 +181,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
 	public void CancelAllSchedules(Context context)
 	{
         if (!list.isEmpty()) {
-            Log.d("debug", "activeIds: " + list.size());
+            AssetsHelper.myLog("debug", "activeIds: " + list.size());
 
             Iterator<Long> it = list.iterator();
             while(it.hasNext()){
@@ -191,13 +191,13 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.cancel(sender);
                 sender.cancel();
-                Log.d("debug","removing schedule with id: "+id);
+                AssetsHelper.myLog("debug","removing schedule with id: "+id);
                 it.remove();
             }
 
         }
         else {
-            Log.d("debug","activeIds is empty");
+            AssetsHelper.myLog("debug","activeIds is empty");
         }
 	}
 
@@ -206,7 +206,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         PendingIntent sender = PendingIntent.getBroadcast(context, id.intValue(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
-        Log.d("debug", "scheduled alarm cancelled "+ id);
+        AssetsHelper.myLog("debug", "scheduled alarm cancelled "+ id);
         list.remove(id);
     }
 }

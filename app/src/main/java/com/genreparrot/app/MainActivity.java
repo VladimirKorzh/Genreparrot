@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.genreparrot.adapters.AssetsHelper;
@@ -27,8 +26,6 @@ import util.Inventory;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     static final String TAG = "MainActivity";
-
-    static final boolean EMULATOR_BUILD = true;
 
     // Global references to action bar and viewPager
     private ViewPager viewPager;
@@ -52,18 +49,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiZ9RhHkwfm9K851Q86pWuWfdBoorVQkI+DCdSquJB6uMt+FzeDgD3fdCzjAvzRzP9NW9zlVgoh7CZhzgv+9EYaRHfaOkX1dBRBvGOyo3wu6q1r56s9yLoDLT2GeAJuHXVFtOQqsPOK0ME8Af5UWtYhf3YIkBLmOX4eFDCGuwTKNRJ5IarAwDVs+ZPhgZeDyTBGF+xEStqYg/htQKbYh924LRYmMRmIOVt9Jw/j5nPKqGVFpS7qD/fZOzl3FeD+wp0D7XBC/zsBR/ex9CxaWrtJ/xMb9ktQyP1cc7Pzob7TnjVa/ggKSJsOdjXsCwe4gbssJ/Pr4TM2pWp+eMO33RDwIDAQAB";
 
         // Create the helper, passing it our context and the public key to verify signatures with
-        Log.d(TAG, "Creating IAB helper.");
+        AssetsHelper.myLog(TAG, "Creating IAB helper.");
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
         // enable debug logging (for a production application, you should TODO set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
-        Log.d(TAG, "Starting setup.");
+        AssetsHelper.myLog(TAG, "Starting setup.");
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
+                AssetsHelper.myLog(TAG, "Setup finished.");
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
@@ -76,7 +73,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 if (mHelper == null) return;
 
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful.");
+                AssetsHelper.myLog(TAG, "Setup successful.");
                 l.changeMsg(getString(R.string.msgFetchingAvailablePackages));
                 mHelper.queryInventoryAsync(false, AssetsHelper.getInstance().packages_found, queryAvailablePackagesListener);
 
@@ -88,7 +85,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     // Listener that's called when we finish querying the items and subscriptions we own
     IabHelper.QueryInventoryFinishedListener queryAvailablePackagesListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query store inventory finished.");
+            AssetsHelper.myLog(TAG, "Query store inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
@@ -100,10 +97,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 return;
             }
             else {
-                Log.d(TAG, "Query store inventory was successful.");
+                AssetsHelper.myLog(TAG, "Query store inventory was successful.");
             }
 
-            Log.d(TAG, "Now initiating owned items query");
+            AssetsHelper.myLog(TAG, "Now initiating owned items query");
             l.changeMsg(getString(R.string.msgGettingListOfOwnedProducts));
             mHelper.queryInventoryAsync(queryOwnedPackagesListener);
         }
@@ -119,11 +116,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 LoadingDialog.loading.hide();
             }
             else {
-                Log.d(TAG, "Owned items query successful.");
+                AssetsHelper.myLog(TAG, "Owned items query successful.");
                 for (String sku : AssetsHelper.getInstance().packages_found){
                     if (inventory.hasPurchase(sku)){
                         AssetsHelper.getInstance().packages_loaded.get(sku).owned = true;
-                        Log.d(TAG, "User owns: "+sku);
+                        AssetsHelper.myLog(TAG, "User owns: "+sku);
                     }
                 }
                 LoadingDialog.loading.hide();
@@ -165,12 +162,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 SoundPackage sp = new SoundPackage(getApplication(), AssetsHelper.getPkg_path(pkg));
                 publishProgress(getString(R.string.msgJustLoadedPackage)+ sp.props.getProperty("caption"));
                 a.packages_loaded.put(pkg, sp);
-                Log.d(TAG, "Package loaded: "+ pkg);
+                AssetsHelper.myLog(TAG, "Package loaded: "+ pkg);
             }
 
             // Load google In-App Store library and connect
             publishProgress(getString(R.string.msgInitiatingAppStore));
-            if (!EMULATOR_BUILD) { initiateAppStore(); }
+            if (!AssetsHelper.EMULATOR_BUILD) { initiateAppStore(); }
 
             return "Success";
         }
@@ -185,10 +182,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             if (alarmUp)
             {
-                Log.d(TAG, "Alarm is already active");
+                AssetsHelper.myLog(TAG, "Alarm is already active");
             }
             else {
-                Log.d(TAG,"Alarm wasn't set. Setting it now.");
+                AssetsHelper.myLog(TAG,"Alarm wasn't set. Setting it now.");
                 ((ScheduleFragment) tabsPagerAdapter.getItem(1)).ad.actionStartTraining();
             }
         }
@@ -216,10 +213,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
 
-    // TODO Figure out if this is needed
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+        AssetsHelper.myLog(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
         if (mHelper == null) return;
 
         // Pass on the activity result to the helper for handling
@@ -230,7 +226,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             super.onActivityResult(requestCode, resultCode, data);
         }
         else {
-            Log.d(TAG, "onActivityResult handled by IABUtil.");
+            AssetsHelper.myLog(TAG, "onActivityResult handled by IABUtil.");
         }
     }
 
@@ -240,7 +236,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onDestroy();
 
         // very important:
-        Log.d(TAG, "Destroying helper.");
+        AssetsHelper.myLog(TAG, "Destroying helper.");
         if (mHelper != null) {
             mHelper.dispose();
             mHelper = null;
@@ -250,7 +246,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
     public void setupUI(){
-        if (EMULATOR_BUILD) LoadingDialog.loading.hide();
+        if (AssetsHelper.EMULATOR_BUILD) LoadingDialog.loading.hide();
         // Set default volume control buttons reaction
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -309,7 +305,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         AlertDialog.Builder bld = new AlertDialog.Builder(this);
         bld.setMessage(message);
         bld.setNeutralButton("OK", null);
-        Log.d(TAG, "Showing alert dialog: " + message);
+        AssetsHelper.myLog(TAG, "Showing alert dialog: " + message);
         bld.create().show();
     }
 

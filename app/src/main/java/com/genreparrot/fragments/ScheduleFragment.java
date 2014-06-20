@@ -3,7 +3,6 @@ package com.genreparrot.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.genreparrot.adapters.AssetsHelper;
 import com.genreparrot.adapters.ScheduleListAdapter;
 import com.genreparrot.app.CreateEditSchedule;
 import com.genreparrot.app.R;
@@ -74,7 +74,7 @@ public class ScheduleFragment extends Fragment
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Log.d("debug", "Clicked item pos: " + String.valueOf(info.id));
+        AssetsHelper.myLog("debug", "Clicked item pos: " + String.valueOf(info.id));
 
         ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
         ScheduleListAdapter ad = (ScheduleListAdapter) lst.getAdapter();

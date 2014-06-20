@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,23 +139,23 @@ public class MediaFragment extends Fragment
     // Callback for when a purchase is finished
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            AssetsHelper.myLog(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
             // if we were disposed of in the meantime, quit.
             if (mHelper == null) return;
 
             if (result.isFailure()) {
-                Log.d(TAG, "Error purchasing: " + result);
+                AssetsHelper.myLog(TAG, "Error purchasing: " + result);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
-                Log.d(TAG, "Error purchasing. Authenticity verification failed.");
+                AssetsHelper.myLog(TAG, "Error purchasing. Authenticity verification failed.");
                 return;
             }
             String purchased_package = purchase.getSku();
             AssetsHelper.getInstance().packages_loaded.get(purchased_package).owned = true;
             getList();
-            Log.d(TAG, "Purchase successful.");
+            AssetsHelper.myLog(TAG, "Purchase successful.");
         }
     };
 

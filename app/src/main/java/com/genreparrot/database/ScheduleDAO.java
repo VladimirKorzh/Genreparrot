@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import com.genreparrot.adapters.AssetsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,11 @@ public class ScheduleDAO {
     }
 
     public boolean toggleSchedule(int id, int state){
-        Log.d("debug","toggleSchedule: "+id+" "+state);
+        AssetsHelper.myLog("debug", "toggleSchedule: " + id + " " + state);
         ContentValues values = new ContentValues();
         values.put(SqliteHelper.COLUMN_STATE, state);
         int i = database.update(SqliteHelper.TABLE_SCHEDULES, values, SqliteHelper.COLUMN_ID + "="+id,null);
-        Log.d("debug","result: "+i);
+        AssetsHelper.myLog("debug", "result: " + i);
         return i>0;
     }
 
@@ -90,7 +91,7 @@ public class ScheduleDAO {
                 null, null, null);
 
         if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
-            Log.d("debug", "empty cursor");
+            AssetsHelper.myLog("debug", "empty cursor");
         }
         cursor.moveToFirst();
         Schedule newSchedule = cursorToSchedule(cursor);

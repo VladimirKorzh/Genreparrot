@@ -3,7 +3,8 @@ package com.genreparrot.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.Time;
-import android.util.Log;
+
+import com.genreparrot.adapters.AssetsHelper;
 
 public class Schedule implements Parcelable {
     private long id;
@@ -81,12 +82,12 @@ public class Schedule implements Parcelable {
 
     public void print() {
         Time t;
-        Log.d("debug", "Id: "+ this.getId());
-        Log.d("debug", "File: "+ this.getFilename());
+        AssetsHelper.myLog("debug", "Id: " + this.getId());
+        AssetsHelper.myLog("debug", "File: " + this.getFilename());
         t = timeMillisToObject(this.getStarttime());
-        Log.d("debug", "Start Time: " + t.hour + ":" + t.minute + ":" + t.second);
+        AssetsHelper.myLog("debug", "Start Time: " + t.hour + ":" + t.minute + ":" + t.second);
         t = timeMillisToObject(this.getEndtime());
-        Log.d("debug", "End Time: " + t.hour + ":" + t.minute + ":" + t.second);
+        AssetsHelper.myLog("debug", "End Time: " + t.hour + ":" + t.minute + ":" + t.second);
     }
 
     public long getId() {

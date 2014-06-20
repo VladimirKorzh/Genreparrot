@@ -139,7 +139,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
 
                 if (layout != null && sw != null) {
                     TextView txtPos = (TextView) layout.findViewById(R.id.txtPos);
-                    Log.d("debug", "clicked " + txtPos.getText());
+                    AssetsHelper.myLog("debug", "clicked " + txtPos.getText());
 
                     ScheduleDAO SchDao = new ScheduleDAO(getContext().getApplicationContext());
                     SchDao.open();

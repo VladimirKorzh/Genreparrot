@@ -342,7 +342,7 @@ public class CreateEditSchedule extends ActionBarActivity {
 
                     Ringtone r = RingtoneManager.getRingtone(this, Uri.parse(data.getDataString()));
 
-                    Log.d("debug", "User selected recording: "+data.getDataString()+" "+ r.getTitle(this));
+                    AssetsHelper.myLog("debug", "User selected recording: "+data.getDataString()+" "+ r.getTitle(this));
                     SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), data.getDataString());
                     break;
             }

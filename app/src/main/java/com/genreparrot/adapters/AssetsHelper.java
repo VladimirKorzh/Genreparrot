@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +11,10 @@ import java.util.HashMap;
 
 public class AssetsHelper {
     private static AssetsHelper instance = null;
+
+    public static final boolean EMULATOR_BUILD = false;
+    public static final boolean ENABLE_DEBUG_LOG = false;
+
 
     final static String pkg_path = "packages";
     final static String TAG = "AssetsHelper";
@@ -36,6 +39,11 @@ public class AssetsHelper {
 
 
 
+    public static void myLog(String tag, String msg){
+        if (ENABLE_DEBUG_LOG) AssetsHelper.myLog(tag,msg);
+    }
+
+
 
 
     public String getFilepathFromFileAlias(String fileAlias){
@@ -44,8 +52,8 @@ public class AssetsHelper {
                 return sp.files.inverse().get(fileAlias);
             }
         }
-        Log.d(TAG,"Input: "+ fileAlias);
-        Log.d(TAG,"Error finding corresponding filepath. returning what we've got.");
+        AssetsHelper.myLog(TAG,"Input: "+ fileAlias);
+        AssetsHelper.myLog(TAG,"Error finding corresponding filepath. returning what we've got.");
         return fileAlias;
     }
 
@@ -55,9 +63,9 @@ public class AssetsHelper {
                 return sp.files.get(filepath);
             }
         }
-        Log.d(TAG,"Input: "+ filepath);
-        Log.d(TAG,"Error finding corresponding alias. returning what we've got.");
-        Log.d(TAG, "Probably: "+ getRealPathFromURI(Uri.parse(filepath)));
+        AssetsHelper.myLog(TAG,"Input: "+ filepath);
+        AssetsHelper.myLog(TAG,"Error finding corresponding alias. returning what we've got.");
+        AssetsHelper.myLog(TAG, "Probably: "+ getRealPathFromURI(Uri.parse(filepath)));
         return getRealPathFromURI(Uri.parse(filepath));
     }
 
@@ -76,11 +84,6 @@ public class AssetsHelper {
 
         return res;
     }
-
-
-
-
-
 
     // returns all the sound packages names
     public static ArrayList<String> getSoundPackagesNames(Context c){
@@ -126,7 +129,7 @@ public class AssetsHelper {
         try {
             for (String filename : context.getAssets().list(folder)){
                 boolean flag = false;
-                Log.d("debug", "AssetsHelper found file: " + filename);
+                AssetsHelper.myLog("debug", "AssetsHelper found file: " + filename);
                 for (String exc : except) {
                     if (filename.endsWith(exc)) {
                         flag = true;

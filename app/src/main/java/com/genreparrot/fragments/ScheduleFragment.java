@@ -90,7 +90,7 @@ public class ScheduleFragment extends Fragment
                 break;
             case R.id.schedule_edit_item:
                 scheduleDAO.toggleSchedule((int) s.getId(),0);
-                ad.actionStartTraining();
+
 
                 Intent intent = new Intent(getActivity(), CreateEditSchedule.class);
                 Bundle b = new Bundle();
@@ -101,6 +101,8 @@ public class ScheduleFragment extends Fragment
                 break;
         }
 
+        // restart the training in case of any change.
+        ad.actionStartTraining();
         scheduleDAO.close();
         return super.onContextItemSelected(item);
     }

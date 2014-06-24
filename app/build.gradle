@@ -2,13 +2,13 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
-        versionCode 6
-        versionName "Polished"
+        versionCode 7
+        versionName "Hear my voice"
     }
 
     signingConfigs {

@@ -47,7 +47,7 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
             lastContext = context;
 
             mp.setVolume(1f, 1f);
-            if (filename.contains("storage/")) {
+            if (filename.contains("content://")) {
                 mp.setDataSource(filename);
             }
             else {

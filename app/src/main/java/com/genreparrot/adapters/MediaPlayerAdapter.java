@@ -151,23 +151,26 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
 
         // Set the desired output volume
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, s.getVolume(), 0);
 
-        // initiate our player and set up the playlist
-		SoundBatchPlayer sb = new SoundBatchPlayer();
-		Stack files = new Stack();
-		files.push(s.getFilename());
+        // prevent playing files if other are playing
+        if (!audioManager.isMusicActive()) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, s.getVolume(), 0);
 
-        // Check if we have played the attractor sound enough times already
-        Time sessionAttractorEnd = new Time();
-        sessionAttractorEnd.set(Schedule.timeMillisToObject(s.getStarttime()));
-        sessionAttractorEnd.second += (s.getAttractorTimes()*s.getRepsinterval())-1;
-        sessionAttractorEnd.normalize(true);
-        if (currentTime.before(sessionAttractorEnd)) {
-            files.push(String.valueOf(s.getAttractorFile()));
+            // initiate our player and set up the playlist
+            SoundBatchPlayer sb = new SoundBatchPlayer();
+            Stack files = new Stack();
+            files.push(s.getFilename());
+
+            // Check if we have played the attractor sound enough times already
+            Time sessionAttractorEnd = new Time();
+            sessionAttractorEnd.set(Schedule.timeMillisToObject(s.getStarttime()));
+            sessionAttractorEnd.second += (s.getAttractorTimes() * s.getRepsinterval()) - 1;
+            sessionAttractorEnd.normalize(true);
+            if (currentTime.before(sessionAttractorEnd)) {
+                files.push(String.valueOf(s.getAttractorFile()));
+            }
+            sb.playPlaylist(context, files);
         }
-		sb.playPlaylist(context, files);
-		
 		//Release the lock
 		wl.release();
 	}

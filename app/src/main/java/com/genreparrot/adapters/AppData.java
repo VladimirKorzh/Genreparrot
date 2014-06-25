@@ -22,7 +22,7 @@ public class AppData {
     private static AppData instance = null;
 
     private static final String  TAG = "AppData";
-
+      //enabled proguard
     public static final boolean  EMULATOR_BUILD = false;
     private static final boolean ENABLE_DEBUG_LOG = false;
     public static final boolean  APPSTORE_DEBUGGING = false;

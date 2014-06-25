@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.AppData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,8 @@ public class ScheduleDAO {
                                     SqliteHelper.COLUMN_REPSINTERVAL,
                                     SqliteHelper.COLUMN_SESSIONINTERVAL,
                                     SqliteHelper.COLUMN_ATTRACTORTIMES,
-                                    SqliteHelper.COLUMN_STATE};
+                                    SqliteHelper.COLUMN_STATE,
+                                    SqliteHelper.COLUMN_ATTRACTORFILE};
 
     public ScheduleDAO(Context context) {
         dbHelper = new SqliteHelper(context);
@@ -42,7 +43,7 @@ public class ScheduleDAO {
 
     public boolean updateSchedule(int id, String filename, int volume, long starttime, long endtime,
                                     int repspersession, int repsinterval, int sessioninterval, int attractortimes,
-                                   int state) {
+                                   int state, String attractorFile) {
         ContentValues values = new ContentValues();
 
         values.put(SqliteHelper.COLUMN_FILENAME, filename);
@@ -54,23 +55,24 @@ public class ScheduleDAO {
         values.put(SqliteHelper.COLUMN_SESSIONINTERVAL, sessioninterval);
         values.put(SqliteHelper.COLUMN_ATTRACTORTIMES, attractortimes);
         values.put(SqliteHelper.COLUMN_STATE, state);
+        values.put(SqliteHelper.COLUMN_ATTRACTORFILE, attractorFile);
         int i = database.update(SqliteHelper.TABLE_SCHEDULES, values, SqliteHelper.COLUMN_ID + "="+id,null);
         return i>0;
     }
 
     public boolean toggleSchedule(int id, int state){
-        AssetsHelper.myLog("debug", "toggleSchedule: " + id + " " + state);
+        AppData.myLog("debug", "toggleSchedule: " + id + " " + state);
         ContentValues values = new ContentValues();
         values.put(SqliteHelper.COLUMN_STATE, state);
         int i = database.update(SqliteHelper.TABLE_SCHEDULES, values, SqliteHelper.COLUMN_ID + "="+id,null);
-        AssetsHelper.myLog("debug", "result: " + i);
+        AppData.myLog("debug", "result: " + i);
         return i>0;
     }
 
 
     public Schedule createSchedule(String filename, int volume, long starttime, long endtime,
                                    int repspersession, int repsinterval, int sessioninterval, int attractortimes,
-                                   int state) {
+                                   int state, String attractorFile) {
         ContentValues values = new ContentValues();
 
         values.put(SqliteHelper.COLUMN_FILENAME, filename);
@@ -82,8 +84,9 @@ public class ScheduleDAO {
         values.put(SqliteHelper.COLUMN_SESSIONINTERVAL, sessioninterval);
         values.put(SqliteHelper.COLUMN_ATTRACTORTIMES, attractortimes);
         values.put(SqliteHelper.COLUMN_STATE, state);
+        values.put(SqliteHelper.COLUMN_ATTRACTORFILE, attractorFile);
 
-        AssetsHelper.myLog("DATABASE", values.toString());
+        AppData.myLog("DATABASE", values.toString());
 
         long insertId = database.insert(SqliteHelper.TABLE_SCHEDULES, null, values);
 
@@ -92,7 +95,7 @@ public class ScheduleDAO {
                 null, null, null);
 
         if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
-            AssetsHelper.myLog("debug", "empty cursor");
+            AppData.myLog("debug", "empty cursor");
         }
         cursor.moveToFirst();
         Schedule newSchedule = cursorToSchedule(cursor);
@@ -146,8 +149,9 @@ public class ScheduleDAO {
         schedule.setRepspersession(cursor.getInt(5));
         schedule.setRepsinterval(cursor.getInt(6));
         schedule.setSessioninterval(cursor.getInt(7));
-        schedule.setAttractor(cursor.getInt(8));
+        schedule.setAttractorTimes(cursor.getInt(8));
         schedule.setState(cursor.getInt(9));
+        schedule.setAttractorFile(cursor.getString(10));
 
         return schedule;
     }

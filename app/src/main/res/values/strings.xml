@@ -6,6 +6,7 @@
     <string name="title_activity_create_edit_alarm">Schedule details</string>
     <string name="SelectTrainingSoundDialogTitle">Select training phrase</string>
     <string name="lblTrainingSound">Training phrase</string>
+    <string name="lblAttractorSound">Attracting sound</string>
     <string name="lblNotSelected">Not Selected</string>
     <string name="btn_display_extra_settings">Display Extra Settings</string>
     <string name="btn_hide_extra_settings">Hide Extra Settings</string>
@@ -54,6 +55,10 @@
     <string name="msgErrBillingSetup">Problem setting up in-app store.</string>
     <string name="msgErrFailedQueryInventory">Failed to query store inventory</string>
     <string name="msgErrOwnedQueryFailed">Failed to query owned items</string>
+    <string name="title_activity_loading">Loading</string>
+    <string name="title_activity_tutorial">Tutorial</string>
+    <string name="msgResettingAlarm">Resetting Alarm</string>
+    <string name="msgReadingSettings">Reading settings</string>
 
 
 </resources>

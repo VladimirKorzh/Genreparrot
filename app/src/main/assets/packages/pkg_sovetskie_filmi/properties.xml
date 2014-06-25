@@ -2,7 +2,14 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="caption">Советские фильмы 1</entry>
-
+    <entry key="filelist">
+        led_tronulsa,
+        ochered,
+        odin_za_vsex,
+        oruzhie_na_pol,
+        papiros,
+        rodnoy
+    </entry>
     <entry key="led_tronulsa">Лед тронулся, Господа, лед тронулся.</entry>
     <entry key="ochered">В очередь сукины дети, в очередь</entry>
     <entry key="odin_za_vsex">Один за всех и все за одного</entry>

@@ -3,6 +3,14 @@
 <properties>
 <entry key="caption">Пираты карибского моря</entry>
 
+    <entry key="filelist">
+        begaut_kamni,
+        moy_korabl,
+        ne_dla_tebja_pulja,
+        ostrov_privedeniy,
+        otkuda_etouvas
+    </entry>
+
 <entry key="begaut_kamni">За нами бегают камни</entry>
 <entry key="moy_korabl">Перестаньте дырявить мой корабль</entry>
 <entry key="ne_dla_tebja_pulja">Не для тебя эта пуля</entry>

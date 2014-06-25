@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.Time;
 
-import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.AppData;
 
 public class Schedule implements Parcelable {
     private long id;
@@ -17,8 +17,11 @@ public class Schedule implements Parcelable {
     private int repspersession;
     private int repsinterval;
     private int sessioninterval;
-    private int attractor;
+    private int attractorTimes;
     private int state;
+
+    private String attractorFile;
+
 
     public Schedule() {
 
@@ -34,8 +37,9 @@ public class Schedule implements Parcelable {
         this.setRepspersession(n.getRepspersession());
         this.setRepsinterval(n.getRepsinterval());
         this.setSessioninterval(n.getSessioninterval());
-        this.setAttractor(n.getAttractor());
+        this.setAttractorTimes(n.getAttractorTimes());
         this.setState(n.getState());
+        this.setAttractorFile(n.getAttractorFile());
     }
 
     public static long timeStringToMillis(String value) {
@@ -82,12 +86,12 @@ public class Schedule implements Parcelable {
 
     public void print() {
         Time t;
-        AssetsHelper.myLog("debug", "Id: " + this.getId());
-        AssetsHelper.myLog("debug", "File: " + this.getFilename());
+        AppData.myLog("debug", "Id: " + this.getId());
+        AppData.myLog("debug", "File: " + this.getFilename());
         t = timeMillisToObject(this.getStarttime());
-        AssetsHelper.myLog("debug", "Start Time: " + t.hour + ":" + t.minute + ":" + t.second);
+        AppData.myLog("debug", "Start Time: " + t.hour + ":" + t.minute + ":" + t.second);
         t = timeMillisToObject(this.getEndtime());
-        AssetsHelper.myLog("debug", "End Time: " + t.hour + ":" + t.minute + ":" + t.second);
+        AppData.myLog("debug", "End Time: " + t.hour + ":" + t.minute + ":" + t.second);
     }
 
     public long getId() {
@@ -139,12 +143,12 @@ public class Schedule implements Parcelable {
         this.sessioninterval = sessioninterval;
     }
 
-    public int getAttractor() {
-        return attractor;
+    public int getAttractorTimes() {
+        return attractorTimes;
     }
 
-    public void setAttractor(int attractor) {
-        this.attractor = attractor;
+    public void setAttractorTimes(int attractorTimes) {
+        this.attractorTimes = attractorTimes;
     }
 
     public int getVolume() {
@@ -188,8 +192,9 @@ public class Schedule implements Parcelable {
         parcel.writeInt(repspersession);
         parcel.writeInt(repsinterval);
         parcel.writeInt(sessioninterval);
-        parcel.writeInt(attractor);
+        parcel.writeInt(attractorTimes);
         parcel.writeInt(state);
+        parcel.writeString(attractorFile);
     }
 
     public Schedule(Parcel pc) {
@@ -203,8 +208,9 @@ public class Schedule implements Parcelable {
         repspersession = pc.readInt();
         repsinterval = pc.readInt();
         sessioninterval = pc.readInt();
-        attractor = pc.readInt();
+        attractorTimes = pc.readInt();
         state = pc.readInt();
+        attractorFile = pc.readString();
     }
 
     public static final Parcelable.Creator<Schedule> CREATOR = new Creator<Schedule>() {
@@ -218,4 +224,12 @@ public class Schedule implements Parcelable {
             return new Schedule[size];
         }
     };
+
+    public String getAttractorFile() {
+        return attractorFile;
+    }
+
+    public void setAttractorFile(String attractorFile) {
+        this.attractorFile = attractorFile;
+    }
 }

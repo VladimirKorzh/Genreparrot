@@ -2,7 +2,13 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="caption">Простоквашино 2</entry>
-
+    <entry key="filelist">
+        chto_za_narodnoe_tvorchestvo,
+        delayte_chto_hotite,
+        idemte_chai_pit,
+        ptichku_ne_obizhat,
+        televizionnaja_peredacha
+    </entry>
     <entry key="chto_za_narodnoe_tvorchestvo">Это что за народное творчество?</entry>
     <entry key="delayte_chto_hotite">Делайте что хотите...</entry>
     <entry key="idemte_chai_pit">Идемте чай пить!</entry>

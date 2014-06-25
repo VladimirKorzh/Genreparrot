@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.AppData;
 import com.genreparrot.adapters.ScheduleListAdapter;
-import com.genreparrot.app.CreateEditSchedule;
+import com.genreparrot.app.CreateEditScheduleActivity;
 import com.genreparrot.app.R;
 import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
@@ -24,22 +24,22 @@ import java.util.List;
 
 public class ScheduleFragment extends Fragment
 {
-    public ScheduleListAdapter ad;
+    public ScheduleListAdapter scheduleListAdapter;
     private View root;
 
     public ScheduleFragment(){
     }
 
-    public void getList(){
+    public void RefreshSchedulesList(){
         ScheduleDAO SchDao = new ScheduleDAO(getActivity());
         SchDao.open();
 
         List<Schedule> lstSch = SchDao.getAllSchedules();
-        ad.clear();
+        scheduleListAdapter.clear();
         for (Schedule s : lstSch){
-            ad.add(s);
+            scheduleListAdapter.add(s);
         }
-        ad.notifyDataSetChanged();
+        scheduleListAdapter.notifyDataSetChanged();
     }
 
 
@@ -48,7 +48,7 @@ public class ScheduleFragment extends Fragment
 
     @Override
     public void onResume(){
-        getList();
+        RefreshSchedulesList();
         super.onResume();
     }
 
@@ -58,9 +58,9 @@ public class ScheduleFragment extends Fragment
         root = inflater.inflate(R.layout.fragment_schedule, container, false);
         ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
 
-        ad = new ScheduleListAdapter(getActivity(), new ArrayList<Schedule>());
-        lst.setAdapter(ad);
-        registerForContextMenu((ListView) root.findViewById(R.id.lstSchedules));
+        scheduleListAdapter = new ScheduleListAdapter(getActivity(), new ArrayList<Schedule>());
+        lst.setAdapter(scheduleListAdapter);
+        registerForContextMenu(root.findViewById(R.id.lstSchedules));
         return root;
     }
 
@@ -74,7 +74,7 @@ public class ScheduleFragment extends Fragment
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        AssetsHelper.myLog("debug", "Clicked item pos: " + String.valueOf(info.id));
+        AppData.myLog("debug", "Clicked item pos: " + String.valueOf(info.id));
 
         ListView lst = (ListView) root.findViewById(R.id.lstSchedules);
         ScheduleListAdapter ad = (ScheduleListAdapter) lst.getAdapter();
@@ -85,14 +85,14 @@ public class ScheduleFragment extends Fragment
             case R.id.schedule_delete_item:
                 scheduleDAO.deleteSchedule(s);
 
-                getList();
-                ad.actionStartTraining();
+                RefreshSchedulesList();
+                AppData.getInstance().RestartAutomaticTimer();
                 break;
             case R.id.schedule_edit_item:
                 scheduleDAO.toggleSchedule((int) s.getId(),0);
 
 
-                Intent intent = new Intent(getActivity(), CreateEditSchedule.class);
+                Intent intent = new Intent(getActivity(), CreateEditScheduleActivity.class);
                 Bundle b = new Bundle();
                 b.putInt("scheduleID", (int) s.getId());
                 intent.putExtras(b);
@@ -102,7 +102,7 @@ public class ScheduleFragment extends Fragment
         }
 
         // restart the training in case of any change.
-        ad.actionStartTraining();
+        AppData.getInstance().RestartAutomaticTimer();
         scheduleDAO.close();
         return super.onContextItemSelected(item);
     }

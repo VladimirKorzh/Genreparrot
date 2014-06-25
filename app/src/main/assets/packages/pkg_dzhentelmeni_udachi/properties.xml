@@ -3,7 +3,16 @@
 <properties>
 <entry key="caption">Джентельмены удачи</entry>
 
-<entry key="ai ty zachem moi veshi vybr">Зачем мои вещи выбросил</entry>
+
+    <entry key="filelist">
+        ai ty zachem moi veshi vybr,
+        bse kina ne budet,
+        kakaja otvratitelnaia rosga,
+        kushat podano,
+        pomogite huligany zrenia lishaut
+    </entry>
+
+    <entry key="ai ty zachem moi veshi vybr">Зачем мои вещи выбросил</entry>
 <entry key="bse kina ne budet">Все кина не будет, электричество кончилось</entry>
 <entry key="kakaja otvratitelnaia rosga">Какая отвратительная рожа</entry>
 <entry key="kushat podano">Кушать подано, садитесь жрать пожалуйста.</entry>

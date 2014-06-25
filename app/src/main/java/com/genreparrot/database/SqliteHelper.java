@@ -16,11 +16,12 @@ public class SqliteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPSPERSESSION = "repspersession";
     public static final String COLUMN_REPSINTERVAL = "repsinterval";
     public static final String COLUMN_SESSIONINTERVAL = "sessioninterval";
-    public static final String COLUMN_ATTRACTORTIMES = "attractor";
+    public static final String COLUMN_ATTRACTORTIMES = "attractorTimes";
     public static final String COLUMN_STATE = "state";
+    public static final String COLUMN_ATTRACTORFILE = "attractorFile";
 
     private static final String DATABASE_NAME = "schedules.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 7;
 
 
     public SqliteHelper(Context context) {
@@ -38,7 +39,8 @@ public class SqliteHelper extends SQLiteOpenHelper {
             COLUMN_REPSINTERVAL + " integer not null, " +
             COLUMN_SESSIONINTERVAL + " integer not null, " +
             COLUMN_ATTRACTORTIMES + " integer not null, "+
-            COLUMN_STATE + " integer " +
+            COLUMN_STATE + " integer, " +
+            COLUMN_ATTRACTORFILE + " text not null " +
             ");";
 
 

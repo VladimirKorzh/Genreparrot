@@ -2,11 +2,19 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="caption">Советские фильмы 2</entry>
-
+    <entry key="filelist">
+        bolshoy_lubvi,
+        podlec,
+        russo_turisto,
+        seriy_volk,
+        zhdi_menja,
+        bitmordu
+    </entry>
     <entry key="bolshoy_lubvi">Хочешь большой, но чистой любви...</entry>
     <entry key="podlec">Каков подлец.</entry>
     <entry key="russo_turisto">Руссо-туристо, облико морале. Ферштейн?</entry>
     <entry key="seriy_volk">Я большой и страшный серый волк. РРрр</entry>
     <entry key="zhdi_menja">Жди меня и я вернусь</entry>
+    <entry key="bitmordu">Когда же будем бить морду?</entry>
 
 </properties>

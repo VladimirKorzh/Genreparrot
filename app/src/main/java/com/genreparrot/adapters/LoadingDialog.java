@@ -5,9 +5,6 @@ import android.content.Context;
 
 import com.genreparrot.app.R;
 
-/**
- * Created by vladimir on 6/17/2014.
- */
 public class LoadingDialog {
     public static ProgressDialog loading;
     private static LoadingDialog instance = null;

@@ -3,6 +3,24 @@
 <properties>
 <entry key="caption">Портал</entry>
 
+    <entry key="filelist">
+        a_eto_chto,
+        a_tebe_vse_ravno,
+        budem_skuchat,
+        chto_eto_shumit,
+        chto_ti_delaew,
+        ciferki,
+        mne_nadoelo,
+        nichego_ne_trogay,
+        razgovor_okonchen,
+        sobludayte_ostorozhnost,
+        ti_chto_izdevaewsa,
+        ti_ewe_priydew,
+        ti_menja_sluwaew,
+        ochen_horosho
+    </entry>
+
+
     <entry key="a_eto_chto">А это что?</entry>
     <entry key="a_tebe_vse_ravno">А тебе все-равно</entry>
     <entry key="budem_skuchat">Будем скучать</entry>

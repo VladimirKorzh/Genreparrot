@@ -32,12 +32,12 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
     }
 
     public void clearPlaylist(){
-        AssetsHelper.myLog("debug","Clear Playlist");
+        AppData.myLog("debug", "Clear Playlist");
         if (!playlist.empty()) playlist.clear();
     }
 
     public void stopPlaying() {
-        AssetsHelper.myLog("debug","Stop Playing");
+        AppData.myLog("debug", "Stop Playing");
         mp.stop();
         mp.reset();
     }
@@ -47,7 +47,8 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
             lastContext = context;
 
             mp.setVolume(1f, 1f);
-            if (filename.contains("content://")) {
+            // if file was recorded using a sound recorder
+            if (filename.contains("content://") || filename.contains("storage:")) {
                 mp.setDataSource(filename);
             }
             else {
@@ -56,15 +57,15 @@ public class SoundBatchPlayer implements MediaPlayer.OnCompletionListener{
             }
             mp.prepare();
             mp.start();
-            AssetsHelper.myLog("debug","Playing file: "+filename);
+            AppData.myLog("debug", "Playing file: " + filename);
         } catch (Exception e) {
-            AssetsHelper.myLog("ERROR", "FILE NOT FOUND: "+filename);
+            AppData.myLog("ERROR", "FILE NOT FOUND: " + filename);
         }
     }
 
     public void playPlaylist(Context context, Stack files) {
       lastContext = context;
-      AssetsHelper.myLog("debug", "playing playlist");
+      AppData.myLog("debug", "playing playlist");
       playlist = files;
       playFile(lastContext, (String)files.pop());
     }

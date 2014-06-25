@@ -6,6 +6,7 @@
     <string name="title_activity_create_edit_alarm">Настройки расписания</string>
     <string name="SelectTrainingSoundDialogTitle">Выбор фразы</string>
     <string name="lblTrainingSound">Фраза для обучения</string>
+    <string name="lblAttractorSound">Звук привлекатор</string>
     <string name="lblNotSelected">Не указано</string>
     <string name="btn_display_extra_settings">Дополнительные параметры</string>
     <string name="btn_hide_extra_settings">Скрыть параметры</string>
@@ -24,7 +25,7 @@
     <string name="action_save_schedule">Сохранить</string>
     <string name="action_cancel_schedule">Отмена</string>
     <string name="btnSelect">Выбрать</string>
-    <string name="btnRecording">Записать</string>
+    <string name="btnRecording">Запись</string>
     <string name="btn_Purchase">Купить все</string>
     <string name="btn_Back">Назад</string>
     <string name="btn_ThankYou">Спасибо за покупку</string>
@@ -54,5 +55,10 @@
     <string name="msgErrBillingSetup">Ошибка при активации магазина</string>
     <string name="msgErrFailedQueryInventory">Ошибка при получении доступных сборников</string>
     <string name="msgErrOwnedQueryFailed">Ошибка при получении списка купленных товаров</string>
+    <string name="title_activity_loading">Загрузка</string>
+    <string name="title_activity_tutorial">Обучение</string>
+    <string name="msgResettingAlarm">Сбрасываем настройки</string>
+    <string name="msgReadingSettings">Считываем настройки</string>
+
 
 </resources>

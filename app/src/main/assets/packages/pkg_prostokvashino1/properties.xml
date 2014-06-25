@@ -2,7 +2,13 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="caption">Простоквашино 1</entry>
-
+    <entry key="filelist">
+        budte_zdorovi,
+        chto_to_kowachim_pahnet,
+        eto_ja_pechkin,
+        kto_tam_kto_tam,
+        popalsa
+    </entry>
     <entry key="budte_zdorovi">Будьте здоровы</entry>
     <entry key="chto_to_kowachim_pahnet">Что-то кошачим пахнет</entry>
     <entry key="eto_ja_pechkin">Это я - почтальон печкин</entry>

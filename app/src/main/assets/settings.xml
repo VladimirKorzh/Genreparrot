@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="packages">
+        pkg_basic,
+        pkg_carribean,
+        pkg_dzhentelmeni_udachi,
+        pkg_operacia_y,
+        pkg_portal,
+        pkg_prostokvashino1,
+        pkg_prostokvashino2,
+        pkg_sovetskie_filmi,
+        pkg_sovetskie_filmi2,
+        pkg_sovetskie_multiki
+    </entry>
+</properties>

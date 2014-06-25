@@ -11,11 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
-import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.AppData;
 import com.genreparrot.adapters.SoundBatchPlayer;
 import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.adapters.StoreGridAdapter;
-import com.genreparrot.app.MainActivity;
 import com.genreparrot.app.R;
 
 import java.util.ArrayList;
@@ -26,28 +25,23 @@ import util.Purchase;
 
 public class MediaFragment extends Fragment
 {
-    private StoreGridAdapter ad;
+    private StoreGridAdapter storeGridAdapter;
     static final String TAG = "MediaFragment";
-
-    private IabHelper mHelper;
-
-    // (arbitrary) request code for the purchase flow
-    static final int RC_REQUEST = 10001;
 
     public MediaFragment(){}
 
 
-    public void getList(){
-        ad.clear();
-        for (SoundPackage sp : AssetsHelper.getInstance().packages_loaded.values()){
-            ad.add(sp);
+    public void RefreshGrid(){
+        storeGridAdapter.clear();
+        for (SoundPackage sp : AppData.getInstance().packages_loaded.values()){
+            storeGridAdapter.add(sp);
         }
-        ad.notifyDataSetChanged();
+        storeGridAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume(){
-        getList();
+        RefreshGrid();
         super.onResume();
     }
 
@@ -57,20 +51,17 @@ public class MediaFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_media, container, false);
 
         // initially provide an empty array of available packages
-        ad = new StoreGridAdapter(getActivity(), new ArrayList<SoundPackage>());
+        storeGridAdapter = new StoreGridAdapter(getActivity(), new ArrayList<SoundPackage>());
         assert root != null;
         GridView grid = (GridView) root.findViewById(R.id.gridStore);
 
-        grid.setAdapter(ad);
+        grid.setAdapter(storeGridAdapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 purchasePackageDialog(i);
             }
         });
-
-
-        mHelper = ((MainActivity) getActivity()).getIabHelper();
 
         return root;
     }
@@ -87,7 +78,7 @@ public class MediaFragment extends Fragment
         final ArrayAdapter<String> adList;
         final ArrayList<String> arr;
 
-        final SoundPackage sp = ad.packages.get(position);
+        final SoundPackage sp = storeGridAdapter.packages.get(position);
 
         // get only the aliases of files
         arr = new ArrayList<String>(sp.files.values());
@@ -117,7 +108,7 @@ public class MediaFragment extends Fragment
             alertDialog.setPositiveButton(R.string.btn_Purchase, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    mHelper.launchPurchaseFlow(getActivity(), sp.SKU, RC_REQUEST,
+                    AppData.getInstance().iabHelper.launchPurchaseFlow(getActivity(), sp.SKU, AppData.RC_REQUEST,
                             mPurchaseFinishedListener, "bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ");
                 }
             });
@@ -139,23 +130,23 @@ public class MediaFragment extends Fragment
     // Callback for when a purchase is finished
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            AssetsHelper.myLog(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            AppData.myLog(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
             // if we were disposed of in the meantime, quit.
-            if (mHelper == null) return;
+            if (AppData.getInstance().iabHelper == null) return;
 
             if (result.isFailure()) {
-                AssetsHelper.myLog(TAG, "Error purchasing: " + result);
+                AppData.myLog(TAG, "Error purchasing: " + result);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
-                AssetsHelper.myLog(TAG, "Error purchasing. Authenticity verification failed.");
+                AppData.myLog(TAG, "Error purchasing. Authenticity verification failed.");
                 return;
             }
             String purchased_package = purchase.getSku();
-            AssetsHelper.getInstance().packages_loaded.get(purchased_package).owned = true;
-            getList();
-            AssetsHelper.myLog(TAG, "Purchase successful.");
+            AppData.getInstance().packages_loaded.get(purchased_package).owned = true;
+            RefreshGrid();
+            AppData.myLog(TAG, "Purchase successful.");
         }
     };
 

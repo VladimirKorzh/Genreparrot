@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<entry key="caption">Базовый набор</entry>
+    <entry key="caption">Базовый набор</entry>
+
+    <entry key="filelist">
+        dumat_menwe_nado,
+        kluchi_ot_kvartiri,
+        pora_podkrepitsa,
+        sova_otkrivay,
+        svobodu_popugayam
+    </entry>
 
     <entry key="dumat_menwe_nado">Думать меньше надо, соображать больше</entry>
     <entry key="kluchi_ot_kvartiri">Может тебе еще и ключи от квартиры, где деньги лежат?</entry>
     <entry key="pora_podkrepitsa">А не пора ли нам подкрепится?</entry>
     <entry key="sova_otkrivay">Сова, открывай, медведь пришел.</entry>
     <entry key="svobodu_popugayam">Свободу попугаям!</entry>
-
 </properties>

@@ -2,7 +2,13 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="caption">Операция Ы</entry>
-
+    <entry key="filelist">
+        lapuh,
+        oper_y,
+        ponia_slysho,
+        romantika,
+        sinhrofazotron
+    </entry>
     <entry key="lapuh">Дуб, как слышно меня? Лопух не догадался?</entry>
     <entry key="oper_y">Операция Ы</entry>
     <entry key="ponia_slysho">Понял, понял. Слышу тебя нормально</entry>

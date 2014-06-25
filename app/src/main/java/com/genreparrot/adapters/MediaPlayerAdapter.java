@@ -6,11 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.format.Time;
-import android.util.Log;
 
 import com.genreparrot.database.Schedule;
 import com.genreparrot.database.ScheduleDAO;
@@ -22,12 +20,8 @@ import java.util.Stack;
 
 public class MediaPlayerAdapter extends BroadcastReceiver {
 
-    public static final long REPEAT_EVERYDAY_BROADCAST_ID=9999;
-
     private static MediaPlayerAdapter instance = null;
     public static List<Long> list = new ArrayList<Long>();
-
-    private static String fAttention = "attactor/chik.wav";
 
     public static MediaPlayerAdapter getInstance() {
         if(instance == null) {
@@ -37,12 +31,12 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
     }
 
     public static void debugTime(String name, Time t){
-        AssetsHelper.myLog("debug", "Time: "+name+" "+t.hour+":"+t.minute+":"+t.second);
+        AppData.myLog("debug", "Time: " + name + " " + t.hour + ":" + t.minute + ":" + t.second);
     }
 
     public void Schedule(Context context, Schedule s){
 
-        AssetsHelper.myLog("debug", "---- Schedule function ----"+s.getId());
+        AppData.myLog("debug", "---- Schedule function ----" + s.getId());
 
         // get the current system time information
         Time currentTime = new Time();
@@ -57,7 +51,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         Time start = Schedule.timeMillisToObject(s.getStarttime());
         Time end   = Schedule.timeMillisToObject(s.getEndtime());
         if (currentTime.after(start) && currentTime.before(end)) {
-            AssetsHelper.myLog("debug", "-> Now is after start but before end. Scheduling to start right now.");
+            AppData.myLog("debug", "-> Now is after start but before end. Scheduling to start right now.");
 
             s.setStarttime(currentTime.toMillis(true));
             this.Schedule(context, s);
@@ -66,7 +60,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
 
         // Check if the alarm is already past its due time. In that case do not execute anything.
         if (currentTime.after(end)){
-            AssetsHelper.myLog("debug", "-> Now is after end do not even bother.");
+            AppData.myLog("debug", "-> Now is after end do not even bother.");
             return;
         }
 
@@ -119,7 +113,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         }
 
 
-        AssetsHelper.myLog("debug", "---- OnReceive ----"+s.getId());
+        AppData.myLog("debug", "---- OnReceive ----" + s.getId());
 
         // get the current system time information
         Time currentTime = new Time();
@@ -132,7 +126,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         //  Schedule time is up. Stop it from repeating.
         Time end   = Schedule.timeMillisToObject(s.getEndtime());
         if (currentTime.after(end)) {
-            AssetsHelper.myLog("debug", "Schedule End Time Reached Cancelling schedule");
+            AppData.myLog("debug", "Schedule End Time Reached Cancelling schedule");
             CancelSchedule(context, s.getId());
             return;
         }
@@ -167,10 +161,10 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         // Check if we have played the attractor sound enough times already
         Time sessionAttractorEnd = new Time();
         sessionAttractorEnd.set(Schedule.timeMillisToObject(s.getStarttime()));
-        sessionAttractorEnd.second += (s.getAttractor()*s.getRepsinterval())-1;
+        sessionAttractorEnd.second += (s.getAttractorTimes()*s.getRepsinterval())-1;
         sessionAttractorEnd.normalize(true);
         if (currentTime.before(sessionAttractorEnd)) {
-            files.push(fAttention);
+            files.push(String.valueOf(s.getAttractorFile()));
         }
 		sb.playPlaylist(context, files);
 		
@@ -181,7 +175,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
 	public void CancelAllSchedules(Context context)
 	{
         if (!list.isEmpty()) {
-            AssetsHelper.myLog("debug", "activeIds: " + list.size());
+            AppData.myLog("debug", "activeIds: " + list.size());
 
             Iterator<Long> it = list.iterator();
             while(it.hasNext()){
@@ -191,13 +185,13 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.cancel(sender);
                 sender.cancel();
-                AssetsHelper.myLog("debug","removing schedule with id: "+id);
+                AppData.myLog("debug", "removing schedule with id: " + id);
                 it.remove();
             }
 
         }
         else {
-            AssetsHelper.myLog("debug","activeIds is empty");
+            AppData.myLog("debug", "activeIds is empty");
         }
 	}
 
@@ -206,7 +200,7 @@ public class MediaPlayerAdapter extends BroadcastReceiver {
         PendingIntent sender = PendingIntent.getBroadcast(context, id.intValue(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
-        AssetsHelper.myLog("debug", "scheduled alarm cancelled "+ id);
+        AppData.myLog("debug", "scheduled alarm cancelled " + id);
         list.remove(id);
     }
 }

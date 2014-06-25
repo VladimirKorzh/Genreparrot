@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.genreparrot.adapters.AssetsHelper;
+import com.genreparrot.adapters.AppData;
 import com.genreparrot.adapters.SoundBatchPlayer;
 import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.database.Schedule;
@@ -33,12 +33,15 @@ import com.genreparrot.fragments.CreateEditFragment;
 import java.util.ArrayList;
 
 
-public class CreateEditSchedule extends ActionBarActivity {
+public class CreateEditScheduleActivity extends ActionBarActivity {
+
+    private static final int REQUEST_SELECT_ATTRACTOR_SOUND = 1;
+    private static final int REQUEST_SELECT_TRAINING_SOUND = 0;
 
     public ArrayList<String> GetListOfTrainingFiles(){
         ArrayList<String> arr = new ArrayList<String>();
 
-        for (SoundPackage sp : AssetsHelper.getInstance().packages_loaded.values()){
+        for (SoundPackage sp : AppData.getInstance().packages_loaded.values()){
             if (sp.owned){
                 arr.addAll(sp.files.values());
             }
@@ -145,17 +148,19 @@ public class CreateEditSchedule extends ActionBarActivity {
                 });
         builder.show();
     }
-    public void btnAttractorSoundClick(View view){
+
+    public void btnAttractorSoundTimesClick(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.AttractorSoundDialog)
-                .setItems(R.array.AttractorSound, new DialogInterface.OnClickListener() {
+                .setItems(R.array.AttractorSoundTimes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        TextView t = (TextView) findViewById(R.id.txtAttractorSound);
-                        t.setText(getResources().getStringArray(R.array.AttractorSound)[which]);
+                        TextView t = (TextView) findViewById(R.id.txtAttractorSoundTimes);
+                        t.setText(getResources().getStringArray(R.array.AttractorSoundTimes)[which]);
                     }
                 });
         builder.show();
     }
+
     public void btnTimeClick(View view){
         TextView t = null;
         switch( view.getId() ){
@@ -193,7 +198,7 @@ public class CreateEditSchedule extends ActionBarActivity {
     }
     public void btnPlayOnce(View view){
         TextView t = (TextView) findViewById(R.id.txtTrainingSound);
-        String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) t.getText());
+        String filepath = AppData.getInstance().getFilepathFromFileAlias((String) t.getText());
         SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), filepath);
     }
 
@@ -207,7 +212,7 @@ public class CreateEditSchedule extends ActionBarActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         TextView t = (TextView) findViewById(R.id.txtTrainingSound);
                         t.setText(ad.getItem(i));
-                        String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias(ad.getItem(i));
+                        String filepath = AppData.getInstance().getFilepathFromFileAlias(ad.getItem(i));
                         SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), filepath);
                     }
                 })
@@ -215,7 +220,7 @@ public class CreateEditSchedule extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-                        startActivityForResult(intent, 0);
+                        startActivityForResult(intent, REQUEST_SELECT_TRAINING_SOUND);
                     }
                 })
                 .setPositiveButton(R.string.btnSelect, new DialogInterface.OnClickListener() {
@@ -227,7 +232,10 @@ public class CreateEditSchedule extends ActionBarActivity {
                 .show();
     }
 
-
+    public void btnAttractorSoundClick(View view){
+        Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        startActivityForResult(intent, REQUEST_SELECT_ATTRACTOR_SOUND);
+    }
 
 
 
@@ -257,7 +265,9 @@ public class CreateEditSchedule extends ActionBarActivity {
             TextView repspersession = (TextView) findViewById(R.id.txtRepsPerSession);
             TextView repsinterval = (TextView) findViewById(R.id.txtRepsInterval);
             TextView sessioninterval = (TextView) findViewById(R.id.txtSessionInterval);
-            TextView attractortimes = (TextView) findViewById(R.id.txtAttractorSound);
+            TextView attractortimes = (TextView) findViewById(R.id.txtAttractorSoundTimes);
+            TextView attractorsound = (TextView) findViewById(R.id.txtAttractorSound);
+
 
             if (filename.getText().toString().equals(getString(R.string.lblNotSelected))) {
                 Toast.makeText(this, getString(R.string.ScheduleErrorMsgFile), Toast.LENGTH_LONG).show();
@@ -284,7 +294,7 @@ public class CreateEditSchedule extends ActionBarActivity {
             Bundle b = getIntent().getExtras();
             assert b != null;
             int scheduleID = b.getInt("scheduleID");
-            String filepath = AssetsHelper.getInstance().getFilepathFromFileAlias((String) filename.getText());
+            String filepath = AppData.getInstance().getFilepathFromFileAlias((String) filename.getText());
             if (scheduleID != -1) {
                 // updating old
                 boolean sch = SchDao.updateSchedule(scheduleID,
@@ -298,7 +308,8 @@ public class CreateEditSchedule extends ActionBarActivity {
                         Integer.parseInt(repsinterval.getText().toString()),
                         Integer.parseInt(sessioninterval.getText().toString()),
                         Integer.parseInt(attractortimes.getText().toString()),
-                        0
+                        0, //state,
+                        String.valueOf(attractorsound.getText())
                 );
                 if (sch){
                     Toast.makeText(this, getString(R.string.ScheduleUpdatedMsg), Toast.LENGTH_LONG).show();
@@ -321,7 +332,8 @@ public class CreateEditSchedule extends ActionBarActivity {
                         Integer.parseInt(repsinterval.getText().toString()),
                         Integer.parseInt(sessioninterval.getText().toString()),
                         Integer.parseInt(attractortimes.getText().toString()),
-                        0
+                        0, //state,
+                        String.valueOf(attractorsound.getText())
                 );
                 Toast.makeText(this, getString(R.string.ScheduleCreatedMsg), Toast.LENGTH_LONG).show();
 
@@ -334,16 +346,29 @@ public class CreateEditSchedule extends ActionBarActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        TextView t;
+        Ringtone r;
+
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case 0:
-                    TextView t = (TextView) findViewById(R.id.txtTrainingSound);
+                case REQUEST_SELECT_TRAINING_SOUND:
+                    t = (TextView) findViewById(R.id.txtTrainingSound);
                     t.setText(data.getDataString());
 
-                    Ringtone r = RingtoneManager.getRingtone(this, Uri.parse(data.getDataString()));
+                    r = RingtoneManager.getRingtone(this, Uri.parse(data.getDataString()));
 
-                    AssetsHelper.myLog("debug", "User selected recording: "+data.getDataString()+" "+ r.getTitle(this));
+                    AppData.myLog("debug", "User selected recording: " + data.getDataString() + " " + r.getTitle(this));
                     SoundBatchPlayer.getInstance().playSingleFile(getBaseContext(), data.getDataString());
+                    break;
+
+                case REQUEST_SELECT_ATTRACTOR_SOUND:
+                    t = (TextView) findViewById(R.id.txtAttractorSound);
+                    t.setText(data.getDataString());
+
+                    r = RingtoneManager.getRingtone(this, Uri.parse(data.getDataString()));
+
+                    AppData.myLog("debug", "User selected attractor recording: " + data.getDataString() + " " + r.getTitle(this));
                     break;
             }
         }

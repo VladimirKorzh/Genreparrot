@@ -2,11 +2,13 @@ package com.genreparrot.app;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.genreparrot.adapters.AppData;
@@ -15,14 +17,19 @@ import com.genreparrot.adapters.MediaPlayerAdapter;
 import com.genreparrot.adapters.SoundPackage;
 import com.genreparrot.database.ScheduleDAO;
 import com.genreparrot.tutorial.TutorialActivity;
+import com.google.android.vending.licensing.AESObfuscator;
+import com.google.android.vending.licensing.LicenseChecker;
+import com.google.android.vending.licensing.LicenseCheckerCallback;
+import com.google.android.vending.licensing.Policy;
+import com.google.android.vending.licensing.ServerManagedPolicy;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 import util.IabHelper;
 import util.IabResult;
-
 public class LoadingActivity extends Activity {
 
     static final String TAG = "Loading";
@@ -31,7 +38,17 @@ public class LoadingActivity extends Activity {
     Properties settings;
     LoadingDialog loadingDialog;
     SharedPreferences prefs;
+    Context context;
 
+    LicenseCheckerCallback mLicenseCheckerCallback;
+    LicenseChecker licenseChecker;
+
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        licenseChecker.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +59,12 @@ public class LoadingActivity extends Activity {
         settings = new Properties();
         loadingDialog = new LoadingDialog(this);
         prefs = getSharedPreferences("com.genreparrot", MODE_PRIVATE);
+        context = this;
+
+        // create uuid if doesn't exist
+        if ( prefs.getString("uuid", "true").equals("true") ) {
+            prefs.edit().putString("uuid", UUID.randomUUID().toString()).commit();
+        }
 
         // Load ASYNC
         LoadingTask lt = new LoadingTask();
@@ -90,6 +113,7 @@ public class LoadingActivity extends Activity {
         }
     }
 
+
     private class LoadingTask extends AsyncTask<Void, String, String> {
         protected String doInBackground(Void... pkgs) {
             AssetManager assetManager = getApplication().getAssets();
@@ -133,7 +157,18 @@ public class LoadingActivity extends Activity {
 
         protected void onPostExecute(String str) {
             AppData.myLog(TAG, "Packages loaded");
-            LoadingDone();
+
+            // Construct the LicenseCheckerCallback. The library calls this when done.
+            mLicenseCheckerCallback = new MyLicenseCheckerCallback();
+
+            // Construct the LicenseChecker with a Policy.
+            licenseChecker = new LicenseChecker(
+                    context, new ServerManagedPolicy(context,
+                    new AESObfuscator(AppData.SALT, getPackageName(), prefs.getString("uuid","wtf"))),
+                    AppData.BASE64_PUBLIC_KEY  // Your public licensing key.
+            );
+
+            licenseChecker.checkAccess(mLicenseCheckerCallback);
         }
     }
 
@@ -225,4 +260,67 @@ public class LoadingActivity extends Activity {
         LoadingDialog.loading.dismiss();
         //TODO ShowTutorialIfNotSeen();
     }
+
+
+
+    private class MyLicenseCheckerCallback implements LicenseCheckerCallback {
+        public void allow(int reason) {
+            if (isFinishing()) {
+                // Don't update UI if Activity is finishing.
+                return;
+            }
+            // Should allow user access.
+            AppData.getInstance().myLog(TAG, "allowed access");
+            LoadingDone();
+        }
+
+        public void dontAllow(int reason) {
+            if (isFinishing()) {
+                // Don't update UI if Activity is finishing.
+                return;
+            }
+
+
+            AppData.getInstance().alert(context, getString(R.string.license_dont_allow));
+
+            if (reason == Policy.RETRY) {
+                // If the reason received from the policy is RETRY, it was probably
+                // due to a loss of connection with the service, so we should give the
+                // user a chance to retry. So show a dialog to retry.
+                AppData.getInstance().alert(context, getString(R.string.something_wrong_retry));
+            } else {
+                // Otherwise, the user is not licensed to use this app.
+                // Your response should always inform the user that the application
+                // is not licensed, but your behavior at that point can vary. You might
+                // provide the user a limited access version of your app or you can
+                // take them to Google Play to purchase the app.
+                AppData.getInstance().alert(context, getString(R.string.please_support_app_developers));
+            }
+
+            //runs without a timer by reposting this handler at the end of the runnable
+            Handler timerHandler = new Handler();
+            Runnable timerRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    System.exit(0);
+                }
+            };
+            timerHandler.postDelayed(timerRunnable,5000);
+
+        }
+
+        @Override
+        public void applicationError(int errorCode) {
+
+        }
+    }
+
+
+
+
+
+
+
+
 }

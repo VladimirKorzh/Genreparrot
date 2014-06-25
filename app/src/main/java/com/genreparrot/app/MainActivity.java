@@ -1,6 +1,5 @@
 package com.genreparrot.app;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -82,14 +81,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
 
-    // Display a simple message to the user
-    public void alert(String message) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(this);
-        bld.setMessage(message);
-        bld.setNeutralButton("OK", null);
-        AppData.myLog(TAG, "Showing alert dialog: " + message);
-        bld.create().show();
+    // Portable solution
+    public void alert(String msg){
+        AppData.getInstance().alert(this, msg);
     }
+
 
 
     public void btnCreateNewScheduleClick(View v){
@@ -154,7 +150,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // Query owned packages
         if (!AppData.EMULATOR_BUILD) AppData.getInstance().iabHelper.queryInventoryAsync(queryOwnedPackagesListener);
-
     }
 
 

@@ -1,6 +1,7 @@
 package com.genreparrot.adapters;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.provider.MediaStore;
 import android.text.format.Time;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,12 +31,17 @@ public class AppData {
     public static final long     REPEAT_EVERYDAY_BROADCAST_ID=9999;
     private static final long    ONE_DAY_IN_MILLIS = 86400000;
 
-    public static final int REPSPERSESSION_DEFAULT = 15;
-    public static final int REPSINTERVAL_DEFAULT = 8;
-    public static final int SESSIONINTERVAL_DEFAULT = 10;
-    public static final int ATTRACTORTIMES_DEFAULT = 3;
+    public static final int    REPSPERSESSION_DEFAULT = 15;
+    public static final int    REPSINTERVAL_DEFAULT = 8;
+    public static final int    SESSIONINTERVAL_DEFAULT = 10;
+    public static final int    ATTRACTORTIMES_DEFAULT = 3;
     public static final String ATTRACTORFILE_DEFAULT = "attactor/chik.wav";
 
+    public static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiZ9RhHkwfm9K851Q86pWuWfdBoorVQkI+DCdSquJB6uMt+FzeDgD3fdCzjAvzRzP9NW9zlVgoh7CZhzgv+9EYaRHfaOkX1dBRBvGOyo3wu6q1r56s9yLoDLT2GeAJuHXVFtOQqsPOK0ME8Af5UWtYhf3YIkBLmOX4eFDCGuwTKNRJ5IarAwDVs+ZPhgZeDyTBGF+xEStqYg/htQKbYh924LRYmMRmIOVt9Jw/j5nPKqGVFpS7qD/fZOzl3FeD+wp0D7XBC/zsBR/ex9CxaWrtJ/xMb9ktQyP1cc7Pzob7TnjVa/ggKSJsOdjXsCwe4gbssJ/Pr4TM2pWp+eMO33RDwIDAQAB";
+    public static final byte[] SALT = new byte[] {
+            -46, 12, 30, -123, -103, -57, 55, -64, 51, 88, -95,
+            -28, 77, -117, -36, -113, -13, 32, -64, 11
+    };
 
     private Context context = null;
     public IabHelper iabHelper = null;
@@ -78,7 +83,14 @@ public class AppData {
         return result;
     }
 
-
+    // Display a simple message to the user
+    public void alert(Context c, String message) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(c);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", null);
+        AppData.myLog(TAG, "Showing alert dialog: " + message);
+        bld.create().show();
+    }
 
 
 
@@ -89,9 +101,6 @@ public class AppData {
     public static void myLog(String tag, String msg){
         if (ENABLE_DEBUG_LOG) Log.d(tag, msg);
     }
-
-
-
 
     public String getFilepathFromFileAlias(String fileAlias){
         for (SoundPackage sp : packages_loaded.values()){
@@ -130,69 +139,6 @@ public class AppData {
         }
 
         return res;
-    }
-//
-//    // returns all the sound packages names
-//    public static ArrayList<String> getSoundPackagesNames(Context c){
-//        String[] pkgs = null;
-//        ArrayList<String> folders = new ArrayList<String>();
-//
-//        try {
-//            pkgs = c.getAssets().list(pkg_path);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (pkgs != null){
-//            for (String p : pkgs){
-//                folders.add(p);
-//            }
-//        }
-//
-//        return folders;
-//    }
-
-    // returns full path to package from its name
-//    public static String getPkg_path(String pkg){
-//        return pkg_path+"/"+pkg;
-//    }
-
-    // Overloaded method for getting the default exclusion list
-    public static ArrayList<String> getAssetsList(Context context, String path) {
-        ArrayList<String> except = new ArrayList<String>();
-        except.add(".txt");
-        except.add(".png");
-        except.add(".xml");
-        return getAssetsList(context, path, except);
-    }
-
-    // Returns the full-path list of items in the specified Asset folder
-    // except the ones with specified extensions
-    public static ArrayList<String> getAssetsList(Context context, String path, ArrayList<String> except){
-        ArrayList<String> files = new ArrayList<String>();
-        String folder = path;
-        String filePath = null;
-
-        try {
-            for (String filename : context.getAssets().list(folder)){
-                boolean flag = false;
-                AppData.myLog("debug", "AppData found file: " + filename);
-                for (String exc : except) {
-                    if (filename.endsWith(exc)) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (flag == false) {
-                    filePath = folder + "/" + filename;
-                    files.add(filePath);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return files;
     }
 
 }

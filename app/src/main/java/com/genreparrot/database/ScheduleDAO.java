@@ -115,10 +115,13 @@ public class ScheduleDAO {
                                         null, null, null, null);
         cursor.moveToFirst();
         if (cursor.getCount()!=0) {
-            return cursorToSchedule(cursor);
+            Schedule res = cursorToSchedule(cursor);
+            cursor.close();
+            return res;
         }
-        else
-            return null;
+
+        cursor.close();
+        return null;
     }
 
     public List<Schedule> getAllSchedules() {

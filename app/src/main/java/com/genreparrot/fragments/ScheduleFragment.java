@@ -33,8 +33,9 @@ public class ScheduleFragment extends Fragment
     public void RefreshSchedulesList(){
         ScheduleDAO SchDao = new ScheduleDAO(getActivity());
         SchDao.open();
-
         List<Schedule> lstSch = SchDao.getAllSchedules();
+        SchDao.close();
+
         scheduleListAdapter.clear();
         for (Schedule s : lstSch){
             scheduleListAdapter.add(s);

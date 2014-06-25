@@ -39,6 +39,7 @@ public class CreateEditFragment extends Fragment {
             int scheduleID = b.getInt("scheduleID");
             SchDao.open();
             Schedule sch = SchDao.getSchedule(scheduleID);
+            SchDao.close();
             if (sch == null) scheduleID = -1;
             if (scheduleID == -1){
                 // new schedule -> load default values
@@ -63,7 +64,6 @@ public class CreateEditFragment extends Fragment {
                 attractortimes.setText(String.valueOf(sch.getAttractorTimes()));
                 attractorsound.setText(String.valueOf(sch.getAttractorFile()));
             }
-            SchDao.close();
             return rootView;
         }
 }

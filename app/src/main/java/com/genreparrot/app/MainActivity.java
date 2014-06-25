@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         });
 
         // Query owned packages
-        AppData.getInstance().iabHelper.queryInventoryAsync(queryOwnedPackagesListener);
+        if (!AppData.EMULATOR_BUILD) AppData.getInstance().iabHelper.queryInventoryAsync(queryOwnedPackagesListener);
 
     }
 

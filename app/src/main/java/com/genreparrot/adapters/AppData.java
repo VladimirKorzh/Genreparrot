@@ -24,7 +24,7 @@ public class AppData {
     private static final String  TAG = "AppData";
 
     public static final boolean  EMULATOR_BUILD = false;
-    private static final boolean ENABLE_DEBUG_LOG = true;
+    private static final boolean ENABLE_DEBUG_LOG = false;
     public static final boolean  APPSTORE_DEBUGGING = false;
 
     public static final int      RC_REQUEST = 22812;

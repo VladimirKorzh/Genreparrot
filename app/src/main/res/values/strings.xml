@@ -62,6 +62,6 @@
     <string name="license_dont_allow">License error</string>
     <string name="please_support_app_developers">Your version of application is not licensed. Please support application developers by buying their products.</string>
     <string name="something_wrong_retry">Something wrong has happened during the validation process. Please retry.</string>
-
+    <string name="msgWaitingForLicenseConfirmation">Waiting for license confirmation.</string>
 
 </resources>

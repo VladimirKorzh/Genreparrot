@@ -123,7 +123,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
         TextView endtime   = (TextView) rowView.findViewById(R.id.txtEndTime);
         TextView filename  = (TextView) rowView.findViewById(R.id.txtFilename);
         TextView txtItemID    = (TextView) rowView.findViewById(R.id.txtItemId);
-        org.jraf.android.backport.switchwidget.Switch sw = (org.jraf.android.backport.switchwidget.Switch) rowView.findViewById(R.id.switchOnOff);
+        final org.jraf.android.backport.switchwidget.Switch sw = (org.jraf.android.backport.switchwidget.Switch) rowView.findViewById(R.id.switchOnOff);
 
         starttime.setText(String.valueOf(Schedule.timeMillisToString(values.get(position).getStarttime())));
         endtime.setText(String.valueOf(Schedule.timeMillisToString(values.get(position).getEndtime())));
@@ -139,7 +139,7 @@ public class ScheduleListAdapter extends ArrayAdapter<Schedule>{
             @Override
             public void onClick(View view) {
                 AppData.myLog("list adapter", "sw state changed by click");
-                ScheduleStateHasChanged(view, position);
+                sw.toggle();
             }
         };
 

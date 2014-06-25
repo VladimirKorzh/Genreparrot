@@ -39,6 +39,8 @@ public class LoadingActivity extends Activity {
     LoadingDialog loadingDialog;
     SharedPreferences prefs;
     Context context;
+    boolean licensed = false;
+
 
     LicenseCheckerCallback mLicenseCheckerCallback;
     LicenseChecker licenseChecker;
@@ -118,6 +120,20 @@ public class LoadingActivity extends Activity {
         protected String doInBackground(Void... pkgs) {
             AssetManager assetManager = getApplication().getAssets();
 
+
+            // Construct the LicenseCheckerCallback. The library calls this when done.
+            mLicenseCheckerCallback = new MyLicenseCheckerCallback();
+
+            // Construct the LicenseChecker with a Policy.
+            licenseChecker = new LicenseChecker(
+                    context, new ServerManagedPolicy(context,
+                    new AESObfuscator(AppData.SALT, getPackageName(), prefs.getString("uuid","wtf"))),
+                    AppData.BASE64_PUBLIC_KEY  // Your public licensing key.
+            );
+
+            licenseChecker.checkAccess(mLicenseCheckerCallback);
+
+
             LoadDefaultDatabaseIfFirstRun();
 
             publishProgress(getString(R.string.msgInitiatingAppStore));
@@ -146,7 +162,7 @@ public class LoadingActivity extends Activity {
                 appData.packages_loaded.put(pkg, new SoundPackage(getApplication(), pkg));
                 publishProgress(getString(R.string.msgJustLoadedPackage)+" "+ pkg);
             }
-
+            publishProgress(getString(R.string.msgWaitingForLicenseConfirmation));
             return "Done";
         }
 
@@ -158,17 +174,18 @@ public class LoadingActivity extends Activity {
         protected void onPostExecute(String str) {
             AppData.myLog(TAG, "Packages loaded");
 
-            // Construct the LicenseCheckerCallback. The library calls this when done.
-            mLicenseCheckerCallback = new MyLicenseCheckerCallback();
+            //runs without a timer by reposting this handler at the end of the runnable
+            final Handler timerHandler = new Handler();
+            Runnable timerRunnable = new Runnable() {
 
-            // Construct the LicenseChecker with a Policy.
-            licenseChecker = new LicenseChecker(
-                    context, new ServerManagedPolicy(context,
-                    new AESObfuscator(AppData.SALT, getPackageName(), prefs.getString("uuid","wtf"))),
-                    AppData.BASE64_PUBLIC_KEY  // Your public licensing key.
-            );
+                @Override
+                public void run() {
+                    if (licensed) LoadingDone();
+                    else timerHandler.postDelayed(this,100);
+                }
+            };
+            timerHandler.postDelayed(timerRunnable,5000);
 
-            licenseChecker.checkAccess(mLicenseCheckerCallback);
         }
     }
 
@@ -271,7 +288,7 @@ public class LoadingActivity extends Activity {
             }
             // Should allow user access.
             AppData.getInstance().myLog(TAG, "allowed access");
-            LoadingDone();
+            licensed = true;
         }
 
         public void dontAllow(int reason) {

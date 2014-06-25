@@ -59,6 +59,9 @@
     <string name="title_activity_tutorial">Обучение</string>
     <string name="msgResettingAlarm">Сбрасываем настройки</string>
     <string name="msgReadingSettings">Считываем настройки</string>
+    <string name="license_dont_allow">Ошибка лицензии</string>
+    <string name="please_support_app_developers">Ваша копия программы не лицензионная. Пожалуйста поддерживайте независимых разработчиков, покупайте программы.</string>
+    <string name="something_wrong_retry">Что-то пошло не так. Попробуйте перезапустить программу.</string>
 
 
 </resources>
